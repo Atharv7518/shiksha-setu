@@ -5,17 +5,62 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Shiksha Setu</title>
   <style>
-    body { font-family: Arial, sans-serif; margin: 0; padding: 0; background: #f8f9fa; color: #333; }
-    header { background: #007bff; color: white; padding: 10px; text-align: center; }
-    main { padding: 20px; }
-    .hidden { display: none; }
-    button { background: #007bff; color: white; border: none; padding: 10px 20px; cursor: pointer; margin-top: 10px; }
-    button:hover { background: #0056b3; }
-    input, select, textarea { display: block; margin: 10px 0; padding: 8px; width: 100%; max-width: 400px; }
-    section { margin-bottom: 30px; padding: 15px; border: 1px solid #ddd; border-radius: 5px; background: #fff; }
-    ul { list-style: none; padding: 0; }
-    ul li { margin: 8px 0; cursor: pointer; color: #007bff; }
-    ul li:hover { text-decoration: underline; }
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background: #f8f9fa;
+      color: #333;
+    }
+    header {
+      background: #007bff;
+      color: white;
+      padding: 10px;
+      text-align: center;
+    }
+    main {
+      padding: 20px;
+    }
+    .hidden {
+      display: none;
+    }
+    button {
+      background: #007bff;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      cursor: pointer;
+      margin-top: 10px;
+    }
+    button:hover {
+      background: #0056b3;
+    }
+    input, select, textarea {
+      display: block;
+      margin: 10px 0;
+      padding: 8px;
+      width: 100%;
+      max-width: 400px;
+    }
+    section {
+      margin-bottom: 30px;
+      padding: 15px;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+      background: #fff;
+    }
+    ul {
+      list-style: none;
+      padding: 0;
+    }
+    ul li {
+      margin: 8px 0;
+      cursor: pointer;
+      color: #007bff;
+    }
+    ul li:hover {
+      text-decoration: underline;
+    }
   </style>
 </head>
 <body>
@@ -73,6 +118,7 @@
 
           <section>
             <h3>✍️ Practice Section</h3>
+            <p>Solve basic problems here:</p>
             <button onclick="generateProblem()">Generate Problem</button>
             <p id="problem"></p>
             <input type="number" id="answerInput" placeholder="Your Answer">
@@ -94,78 +140,55 @@
             <div id="careerDetails" style="margin-top:15px;"></div>
           </section>
         </div>
-
-        <!-- Teacher Dashboard -->
-        <div id="teacherDashboard" class="hidden">
-          <section>
-            <h3>📊 Progress Tracking</h3>
-            <p>Student: Atharv | Quiz Score: 80% | Practice: 7/10</p>
-            <p>Student: Simran | Quiz Score: 60% | Practice: 5/10</p>
-          </section>
-
-          <section>
-            <h3>📝 Assign Level Test</h3>
-            <input type="text" placeholder="Enter test name">
-            <textarea placeholder="Enter test description"></textarea>
-            <button>Assign Test</button>
-          </section>
-        </div>
-
-        <!-- Admin Dashboard -->
-        <div id="adminDashboard" class="hidden">
-          <section>
-            <h3>🔔 Notifications</h3>
-            <ul>
-              <li>Update: New career options added.</li>
-              <li>Reminder: Teacher meeting on Friday.</li>
-            </ul>
-          </section>
-
-          <section>
-            <h3>💬 Feedback</h3>
-            <textarea placeholder="Read feedback here..."></textarea>
-            <button>Send Reply</button>
-          </section>
-        </div>
       </section>
     </main>
   </div>
 
   <script>
+    // Multilingual text content
     const translations = {
       en: { login: "Login", welcome: "Welcome", streak: "Login Streak:" },
       hi: { login: "लॉगिन", welcome: "स्वागत है", streak: "लॉगिन श्रृंखला:" },
       pa: { login: "ਲਾਗਇਨ", welcome: "ਸਵਾਗਤ ਹੈ", streak: "ਲਾਗਇਨ ਸਟ੍ਰੀਕ:" }
     };
 
+    // Career guidance database
     const careerData = {
-      "9": { careers: ["Science Stream", "Commerce Stream", "Arts Stream"],
+      "9": {
+        careers: ["Science Stream", "Commerce Stream", "Arts Stream"],
         details: {
-          "Science Stream": "Focuses on PCM/B subjects → Leads to Engineering, Medical.",
-          "Commerce Stream": "Accounts, Business Studies → Leads to CA, MBA, Finance.",
-          "Arts Stream": "History, Political Science → Leads to UPSC, Journalism, Design."
-        }},
-      "10": { careers: ["Vocational Training", "Diploma Courses", "Higher Secondary"],
+          "Science Stream": "Focuses on Physics, Chemistry, Math, Biology. Leads to Engineering, Medical, Research.",
+          "Commerce Stream": "Focuses on Accounts, Business Studies, Economics. Leads to CA, MBA, Finance careers.",
+          "Arts Stream": "Focuses on History, Political Science, Sociology, etc. Leads to UPSC, Journalism, Design, etc."
+        }
+      },
+      "10": {
+        careers: ["Vocational Training", "Diploma Courses", "Higher Secondary Streams"],
         details: {
-          "Vocational Training": "Skill-based ITI courses.",
-          "Diploma Courses": "2-3 year job-oriented diplomas.",
-          "Higher Secondary": "Choose Science, Commerce, Arts."
-        }},
-      "11": { careers: ["Engineering Prep", "Medical Prep", "Commerce Professional", "Arts & Design"],
+          "Vocational Training": "Skill-based training in ITI, technical skills, trades.",
+          "Diploma Courses": "2-3 year courses in engineering, computer applications, etc.",
+          "Higher Secondary Streams": "Choose Science, Commerce, or Arts for Class 11-12."
+        }
+      },
+      "11": {
+        careers: ["Engineering Preparation", "Medical Preparation", "Commerce Professional", "Arts & Design"],
         details: {
-          "Engineering Prep": "Prepare for JEE/IIT/NIT.",
-          "Medical Prep": "Prepare for NEET, MBBS, Nursing.",
-          "Commerce Professional": "CA, CS, CMA foundation.",
-          "Arts & Design": "Law, Civil Services, Design."
-        }},
-      "12": { careers: ["Engineering", "Medical", "Law", "Management", "Govt Exams"],
+          "Engineering Preparation": "Prepare for JEE, IIT, NIT, and technical courses.",
+          "Medical Preparation": "Prepare for NEET, MBBS, BDS, Nursing, Pharmacy.",
+          "Commerce Professional": "CA Foundation, CS, CMA, or management programs.",
+          "Arts & Design": "Design, Fine Arts, Humanities, Law, Civil Services."
+        }
+      },
+      "12": {
+        careers: ["Engineering", "Medical", "Law", "Management", "Government Exams"],
         details: {
-          "Engineering": "B.Tech, Diploma, CS, IT.",
-          "Medical": "MBBS, Nursing, Pharmacy.",
-          "Law": "BA LLB, Judiciary exams.",
-          "Management": "BBA, MBA, Startup.",
-          "Govt Exams": "UPSC, SSC, Defence."
-        }}
+          "Engineering": "B.Tech, Diploma, Computer Science, IT, Electronics.",
+          "Medical": "MBBS, BDS, Nursing, Pharmacy, Physiotherapy.",
+          "Law": "BA LLB, Law colleges, Judiciary preparation.",
+          "Management": "BBA, MBA, Entrepreneurship.",
+          "Government Exams": "UPSC, SSC, State exams, Defence services."
+        }
+      }
     };
 
     function login() {
@@ -173,6 +196,8 @@
       const role = document.getElementById('role').value;
       if (username) {
         localStorage.setItem('user', JSON.stringify({ username, role }));
+
+        // Login streak
         let streak = localStorage.getItem('streak') || 0;
         streak = parseInt(streak) + 1;
         localStorage.setItem('streak', streak);
@@ -182,9 +207,9 @@
         document.getElementById('welcomeMsg').innerText = translations.en.welcome + " " + username + " (" + role + ")";
         document.getElementById('streak').innerText = translations.en.streak + " " + streak;
 
-        if (role === "student") document.getElementById('studentDashboard').classList.remove('hidden');
-        if (role === "teacher") document.getElementById('teacherDashboard').classList.remove('hidden');
-        if (role === "admin") document.getElementById('adminDashboard').classList.remove('hidden');
+        if (role === "student") {
+          document.getElementById('studentDashboard').classList.remove('hidden');
+        }
       }
     }
 
@@ -192,8 +217,6 @@
       localStorage.removeItem('user');
       document.getElementById('dashboard').classList.add('hidden');
       document.getElementById('studentDashboard').classList.add('hidden');
-      document.getElementById('teacherDashboard').classList.add('hidden');
-      document.getElementById('adminDashboard').classList.add('hidden');
       document.getElementById('loginSection').classList.remove('hidden');
     }
 
@@ -207,10 +230,17 @@
       }
     });
 
+    // Quiz check
     function checkAnswer(button, correct) {
-      document.getElementById('quizResult').innerText = correct ? "✅ Correct!" : "❌ Wrong!";
+      const result = document.getElementById('quizResult');
+      if (correct) {
+        result.innerText = "✅ Correct!";
+      } else {
+        result.innerText = "❌ Wrong, try again!";
+      }
     }
 
+    // Practice problem
     let currentAnswer = null;
     function generateProblem() {
       const a = Math.floor(Math.random() * 10) + 1;
@@ -221,21 +251,29 @@
     }
     function checkProblem() {
       const ans = parseInt(document.getElementById('answerInput').value);
-      document.getElementById('practiceResult').innerText = ans === currentAnswer ? "✅ Correct!" : "❌ Wrong!";
+      if (ans === currentAnswer) {
+        document.getElementById('practiceResult').innerText = "✅ Correct!";
+      } else {
+        document.getElementById('practiceResult').innerText = "❌ Wrong, try again!";
+      }
     }
 
+    // Career guidance
     function showCareers() {
       const cls = document.getElementById('classSelect').value;
       const optionsDiv = document.getElementById('careerOptions');
       const detailsDiv = document.getElementById('careerDetails');
       optionsDiv.innerHTML = "";
       detailsDiv.innerHTML = "";
+
       if (careerData[cls]) {
         const list = document.createElement('ul');
         careerData[cls].careers.forEach(career => {
           const li = document.createElement('li');
           li.innerText = career;
-          li.onclick = () => { detailsDiv.innerHTML = `<strong>${career}</strong><p>${careerData[cls].details[career]}</p>`; };
+          li.onclick = () => {
+            detailsDiv.innerHTML = `<strong>${career}</strong><p>${careerData[cls].details[career]}</p>`;
+          };
           list.appendChild(li);
         });
         optionsDiv.appendChild(list);
