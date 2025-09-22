@@ -49,18 +49,6 @@
       border-radius: 5px;
       background: #fff;
     }
-    ul {
-      list-style: none;
-      padding: 0;
-    }
-    ul li {
-      margin: 8px 0;
-      cursor: pointer;
-      color: #007bff;
-    }
-    ul li:hover {
-      text-decoration: underline;
-    }
   </style>
 </head>
 <body>
@@ -125,20 +113,6 @@
             <button onclick="checkProblem()">Submit</button>
             <p id="practiceResult"></p>
           </section>
-
-          <section>
-            <h3>🎯 Career Guidance</h3>
-            <label for="classSelect">Select Your Class:</label>
-            <select id="classSelect" onchange="showCareers()">
-              <option value="">--Choose--</option>
-              <option value="9">Class 9</option>
-              <option value="10">Class 10</option>
-              <option value="11">Class 11</option>
-              <option value="12">Class 12</option>
-            </select>
-            <div id="careerOptions"></div>
-            <div id="careerDetails" style="margin-top:15px;"></div>
-          </section>
         </div>
       </section>
     </main>
@@ -150,45 +124,6 @@
       en: { login: "Login", welcome: "Welcome", streak: "Login Streak:" },
       hi: { login: "लॉगिन", welcome: "स्वागत है", streak: "लॉगिन श्रृंखला:" },
       pa: { login: "ਲਾਗਇਨ", welcome: "ਸਵਾਗਤ ਹੈ", streak: "ਲਾਗਇਨ ਸਟ੍ਰੀਕ:" }
-    };
-
-    // Career guidance database
-    const careerData = {
-      "9": {
-        careers: ["Science Stream", "Commerce Stream", "Arts Stream"],
-        details: {
-          "Science Stream": "Focuses on Physics, Chemistry, Math, Biology. Leads to Engineering, Medical, Research.",
-          "Commerce Stream": "Focuses on Accounts, Business Studies, Economics. Leads to CA, MBA, Finance careers.",
-          "Arts Stream": "Focuses on History, Political Science, Sociology, etc. Leads to UPSC, Journalism, Design, etc."
-        }
-      },
-      "10": {
-        careers: ["Vocational Training", "Diploma Courses", "Higher Secondary Streams"],
-        details: {
-          "Vocational Training": "Skill-based training in ITI, technical skills, trades.",
-          "Diploma Courses": "2-3 year courses in engineering, computer applications, etc.",
-          "Higher Secondary Streams": "Choose Science, Commerce, or Arts for Class 11-12."
-        }
-      },
-      "11": {
-        careers: ["Engineering Preparation", "Medical Preparation", "Commerce Professional", "Arts & Design"],
-        details: {
-          "Engineering Preparation": "Prepare for JEE, IIT, NIT, and technical courses.",
-          "Medical Preparation": "Prepare for NEET, MBBS, BDS, Nursing, Pharmacy.",
-          "Commerce Professional": "CA Foundation, CS, CMA, or management programs.",
-          "Arts & Design": "Design, Fine Arts, Humanities, Law, Civil Services."
-        }
-      },
-      "12": {
-        careers: ["Engineering", "Medical", "Law", "Management", "Government Exams"],
-        details: {
-          "Engineering": "B.Tech, Diploma, Computer Science, IT, Electronics.",
-          "Medical": "MBBS, BDS, Nursing, Pharmacy, Physiotherapy.",
-          "Law": "BA LLB, Law colleges, Judiciary preparation.",
-          "Management": "BBA, MBA, Entrepreneurship.",
-          "Government Exams": "UPSC, SSC, State exams, Defence services."
-        }
-      }
     };
 
     function login() {
@@ -255,28 +190,6 @@
         document.getElementById('practiceResult').innerText = "✅ Correct!";
       } else {
         document.getElementById('practiceResult').innerText = "❌ Wrong, try again!";
-      }
-    }
-
-    // Career guidance
-    function showCareers() {
-      const cls = document.getElementById('classSelect').value;
-      const optionsDiv = document.getElementById('careerOptions');
-      const detailsDiv = document.getElementById('careerDetails');
-      optionsDiv.innerHTML = "";
-      detailsDiv.innerHTML = "";
-
-      if (careerData[cls]) {
-        const list = document.createElement('ul');
-        careerData[cls].careers.forEach(career => {
-          const li = document.createElement('li');
-          li.innerText = career;
-          li.onclick = () => {
-            detailsDiv.innerHTML = `<strong>${career}</strong><p>${careerData[cls].details[career]}</p>`;
-          };
-          list.appendChild(li);
-        });
-        optionsDiv.appendChild(list);
       }
     }
   </script>
