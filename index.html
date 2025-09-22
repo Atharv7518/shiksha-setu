@@ -1,197 +1,295 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Shiksha Setu</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      margin: 0;
-      padding: 0;
-      background: #f8f9fa;
-      color: #333;
-    }
-    header {
-      background: #007bff;
-      color: white;
-      padding: 10px;
-      text-align: center;
-    }
-    main {
-      padding: 20px;
-    }
-    .hidden {
-      display: none;
-    }
-    button {
-      background: #007bff;
-      color: white;
-      border: none;
-      padding: 10px 20px;
-      cursor: pointer;
-      margin-top: 10px;
-    }
-    button:hover {
-      background: #0056b3;
-    }
-    input, select, textarea {
-      display: block;
-      margin: 10px 0;
-      padding: 8px;
-      width: 100%;
-      max-width: 400px;
-    }
-    section {
-      margin-bottom: 30px;
-      padding: 15px;
-      border: 1px solid #ddd;
-      border-radius: 5px;
-      background: #fff;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shiksha Setu</title>
+    <style>
+        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; margin: 0; padding: 0; background: #f0f2f5; color: #333; }
+        header { background: #007bff; color: white; padding: 1rem; text-align: center; box-shadow: 0 2px 4px rgba(0,0,0,0.1); position: sticky; top: 0; z-index: 1000;}
+        header h1 { margin: 0; }
+        main { padding: 20px; }
+        .view { display: none; } /* All main views are hidden by default */
+        .view.active { display: block; } /* The active view is shown */
+        button { background: #007bff; color: white; border: none; padding: 12px 20px; cursor: pointer; margin-top: 10px; border-radius: 8px; font-size: 16px; transition: background-color 0.2s; }
+        button:hover { background: #0056b3; }
+        .logout-btn { background: #dc3545; }
+        .logout-btn:hover { background: #c82333; }
+        input, select, textarea { display: block; margin: 10px 0; padding: 10px; width: 100%; max-width: 400px; border: 1px solid #ccc; border-radius: 5px; }
+        section { margin-bottom: 30px; padding: 20px; border: 1px solid #ddd; border-radius: 8px; background: #fff; box-shadow: 0 1px 3px rgba(0,0,0,0.05); }
+        h2, h3 { color: #0056b3; }
+        ul { list-style: none; padding: 0; }
+        ul li { margin: 8px 0; padding: 5px; cursor: pointer; color: #007bff; }
+        ul li:hover { text-decoration: underline; background-color: #f8f9fa; }
+        #languageSwitcher { position: absolute; top: 15px; right: 20px; padding: 5px; border-radius: 5px; }
+        .dashboard-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; }
+    </style>
 </head>
 <body>
-  <div id="app">
+
     <header>
-      <h1>Shiksha Setu</h1>
-      <select id="languageSwitcher">
-        <option value="en">English</option>
-        <option value="hi">हिंदी</option>
-        <option value="pa">ਪੰਜਾਬੀ</option>
-      </select>
+        <h1>Shiksha Setu</h1>
+        <select id="languageSwitcher">
+            <option value="en">English</option>
+            <option value="hi">हिंदी</option>
+            <option value="pa">ਪੰਜਾਬੀ</option>
+        </select>
     </header>
 
-    <main>
-      <!-- Login Section -->
-      <section id="loginSection">
-        <h2>Login</h2>
-        <input type="text" id="username" placeholder="Username">
-        <input type="password" id="password" placeholder="Password">
-        <select id="role">
-          <option value="student">Student</option>
-          <option value="teacher">Teacher</option>
-          <option value="admin">Admin</option>
-        </select>
-        <button onclick="login()">Login</button>
-      </section>
-
-      <!-- Dashboard -->
-      <section id="dashboard" class="hidden">
-        <h2 id="welcomeMsg"></h2>
-        <p id="streak"></p>
-        <button onclick="logout()">Logout</button>
-
-        <!-- Student Dashboard -->
-        <div id="studentDashboard" class="hidden">
-          <section>
-            <h3>📘 Interactive eBook</h3>
-            <p>Click on a word to see meaning:</p>
-            <p><span onclick="alert('Meaning: Education')">Education</span> builds a strong <span onclick="alert('Meaning: Bridge')">bridge</span> for the future.</p>
-            <textarea placeholder="Write your notes here..."></textarea>
-          </section>
-
-          <section>
-            <h3>🎥 Video Lecture</h3>
-            <iframe width="300" height="200" src="https://www.youtube.com/embed/aqz-KE-bpKQ" frameborder="0" allowfullscreen></iframe>
-          </section>
-
-          <section>
-            <h3>📝 Quiz</h3>
-            <p>Q1: What does Shiksha mean?</p>
-            <button onclick="checkAnswer(this, true)">Education</button>
-            <button onclick="checkAnswer(this, false)">Bridge</button>
-            <p id="quizResult"></p>
-          </section>
-
-          <section>
-            <h3>✍️ Practice Section</h3>
-            <p>Solve basic problems here:</p>
-            <button onclick="generateProblem()">Generate Problem</button>
-            <p id="problem"></p>
-            <input type="number" id="answerInput" placeholder="Your Answer">
-            <button onclick="checkProblem()">Submit</button>
-            <p id="practiceResult"></p>
-          </section>
+    <main id="app">
+        <div id="loginView" class="view active">
+            <section id="loginSection">
+                <h2 data-translate="login">Login</h2>
+                <input type="text" id="username" placeholder="Username">
+                <input type="password" id="password" placeholder="Password">
+                <select id="role">
+                    <option value="student">Student</option>
+                    <option value="teacher">Teacher</option>
+                    <option value="admin">Admin</option>
+                </select>
+                <button onclick="auth.login()">Login</button>
+            </section>
         </div>
-      </section>
+
+        <div id="studentView" class="view">
+            <section>
+                <h2 id="studentWelcomeMsg" data-translate="welcome"></h2>
+                <p id="studentStreak" data-translate="streak"></p>
+                <button onclick="auth.logout()" class="logout-btn">Logout</button>
+            </section>
+            <div class="dashboard-grid">
+                <section>
+                    <h3>📘 Interactive eBook</h3>
+                    <p>Click on a word to see its meaning:</p>
+                    <p><span onclick="alert('Meaning: Education')">Education</span> builds a strong <span onclick="alert('Meaning: Bridge')">bridge</span> for the future.</p>
+                    <textarea placeholder="Write your notes here..."></textarea>
+                </section>
+
+                <section>
+                    <h3>🎥 Video Lecture</h3>
+                    <iframe width="100%" height="200" src="https://www.youtube.com/embed/aqz-KE-bpKQ" frameborder="0" allowfullscreen></iframe>
+                </section>
+
+                <section>
+                    <h3>📝 Quiz</h3>
+                    <p>Q1: What does 'Shiksha' mean?</p>
+                    <button onclick="studentFeatures.checkQuizAnswer(this, true)">Education</button>
+                    <button onclick="studentFeatures.checkQuizAnswer(this, false)">Bridge</button>
+                    <p id="quizResult"></p>
+                </section>
+
+                <section>
+                    <h3>✍️ Practice Section</h3>
+                    <button onclick="studentFeatures.generateProblem()">Generate Problem</button>
+                    <p id="problem"></p>
+                    <input type="number" id="answerInput" placeholder="Your Answer">
+                    <button onclick="studentFeatures.checkProblem()">Submit</button>
+                    <p id="practiceResult"></p>
+                </section>
+
+                <section>
+                    <h3>🎯 Career Guidance</h3>
+                    <label for="classSelect">Select Your Class:</label>
+                    <select id="classSelect" onchange="careerGuidance.showCareers()">
+                        <option value="">--Choose--</option>
+                        <option value="9">Class 9</option>
+                        <option value="10">Class 10</option>
+                        <option value="11">Class 11</option>
+                        <option value="12">Class 12</option>
+                    </select>
+                    <div id="careerOptions"></div>
+                    <div id="careerDetails" style="margin-top:15px;"></div>
+                </section>
+            </div>
+        </div>
+
+        <div id="teacherView" class="view">
+            <section>
+                <h2 id="teacherWelcomeMsg" data-translate="welcome"></h2>
+                <button onclick="auth.logout()" class="logout-btn">Logout</button>
+            </section>
+            <div class="dashboard-grid">
+                <section>
+                    <h3>📊 Progress Tracking</h3>
+                    <p>Student: Atharv | Quiz Score: 80% | Practice: 7/10</p>
+                    <p>Student: Simran | Quiz Score: 60% | Practice: 5/10</p>
+                </section>
+
+                <section>
+                    <h3>📝 Assign Level Test</h3>
+                    <input type="text" placeholder="Enter test name">
+                    <textarea placeholder="Enter test description"></textarea>
+                    <button>Assign Test</button>
+                </section>
+            </div>
+        </div>
+
+        <div id="adminView" class="view">
+            <section>
+                <h2 id="adminWelcomeMsg" data-translate="welcome"></h2>
+                <button onclick="auth.logout()" class="logout-btn">Logout</button>
+            </section>
+            <div class="dashboard-grid">
+                <section>
+                    <h3>🔔 Notifications</h3>
+                    <ul>
+                        <li>Update: New career options added.</li>
+                        <li>Reminder: Teacher meeting on Friday.</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h3>💬 Feedback</h3>
+                    <textarea placeholder="Read feedback here..."></textarea>
+                    <button>Send Reply</button>
+                </section>
+            </div>
+        </div>
     </main>
-  </div>
 
-  <script>
-    // Multilingual text content
-    const translations = {
-      en: { login: "Login", welcome: "Welcome", streak: "Login Streak:" },
-      hi: { login: "लॉगिन", welcome: "स्वागत है", streak: "लॉगिन श्रृंखला:" },
-      pa: { login: "ਲਾਗਇਨ", welcome: "ਸਵਾਗਤ ਹੈ", streak: "ਲਾਗਇਨ ਸਟ੍ਰੀਕ:" }
-    };
+    <script>
+        // ======================= GLOBAL STATE & UTILITIES =======================
+        const state = {
+            currentUser: null,
+            currentView: 'loginView',
+            streak: 0,
+            quiz: {
+                currentAnswer: null
+            }
+        };
 
-    function login() {
-      const username = document.getElementById('username').value;
-      const role = document.getElementById('role').value;
-      if (username) {
-        localStorage.setItem('user', JSON.stringify({ username, role }));
+        const translations = {
+            en: { login: "Login", welcome: "Welcome", streak: "Login Streak:" },
+            hi: { login: "लॉगिन", welcome: "स्वागत है", streak: "लॉगिन श्रृंखला:" },
+            pa: { login: "ਲਾਗਇਨ", welcome: "ਸਵਾਗਤ ਹੈ", streak: "ਲਾਗਇਨ ਸਟ੍ਰੀਕ:" }
+        };
 
-        // Login streak
-        let streak = localStorage.getItem('streak') || 0;
-        streak = parseInt(streak) + 1;
-        localStorage.setItem('streak', streak);
-
-        document.getElementById('loginSection').classList.add('hidden');
-        document.getElementById('dashboard').classList.remove('hidden');
-        document.getElementById('welcomeMsg').innerText = translations.en.welcome + " " + username + " (" + role + ")";
-        document.getElementById('streak').innerText = translations.en.streak + " " + streak;
-
-        if (role === "student") {
-          document.getElementById('studentDashboard').classList.remove('hidden');
+        // Utility to switch between views
+        function navigateTo(viewId) {
+            document.querySelectorAll('.view').forEach(view => view.classList.remove('active'));
+            document.getElementById(viewId).classList.add('active');
+            state.currentView = viewId;
         }
-      }
-    }
 
-    function logout() {
-      localStorage.removeItem('user');
-      document.getElementById('dashboard').classList.add('hidden');
-      document.getElementById('studentDashboard').classList.add('hidden');
-      document.getElementById('loginSection').classList.remove('hidden');
-    }
+        // ======================= AUTHENTICATION MODULE =======================
+        const auth = {
+            login: function() {
+                const username = document.getElementById('username').value;
+                const role = document.getElementById('role').value;
 
-    document.getElementById('languageSwitcher').addEventListener('change', (e) => {
-      const lang = e.target.value;
-      document.querySelector('#loginSection h2').innerText = translations[lang].login;
-      const user = JSON.parse(localStorage.getItem('user'));
-      if (user) {
-        document.getElementById('welcomeMsg').innerText = translations[lang].welcome + " " + user.username + " (" + user.role + ")";
-        document.getElementById('streak').innerText = translations[lang].streak + " " + localStorage.getItem('streak');
-      }
-    });
+                if (!username) {
+                    alert("Please enter a username.");
+                    return;
+                }
 
-    // Quiz check
-    function checkAnswer(button, correct) {
-      const result = document.getElementById('quizResult');
-      if (correct) {
-        result.innerText = "✅ Correct!";
-      } else {
-        result.innerText = "❌ Wrong, try again!";
-      }
-    }
+                state.currentUser = { username, role };
+                state.streak = parseInt(localStorage.getItem('streak') || 0) + 1;
+                localStorage.setItem('user', JSON.stringify(state.currentUser));
+                localStorage.setItem('streak', state.streak);
 
-    // Practice problem
-    let currentAnswer = null;
-    function generateProblem() {
-      const a = Math.floor(Math.random() * 10) + 1;
-      const b = Math.floor(Math.random() * 10) + 1;
-      currentAnswer = a + b;
-      document.getElementById('problem').innerText = `What is ${a} + ${b}?`;
-      document.getElementById('practiceResult').innerText = "";
-    }
-    function checkProblem() {
-      const ans = parseInt(document.getElementById('answerInput').value);
-      if (ans === currentAnswer) {
-        document.getElementById('practiceResult').innerText = "✅ Correct!";
-      } else {
-        document.getElementById('practiceResult').innerText = "❌ Wrong, try again!";
-      }
-    }
-  </script>
+                this.showDashboard();
+            },
+            logout: function() {
+                state.currentUser = null;
+                localStorage.removeItem('user');
+                navigateTo('loginView');
+            },
+            showDashboard: function() {
+                const { role, username } = state.currentUser;
+                let viewId, welcomeMsgId, streakId;
+
+                if (role === 'student') {
+                    viewId = 'studentView';
+                    welcomeMsgId = 'studentWelcomeMsg';
+                    streakId = 'studentStreak';
+                } else if (role === 'teacher') {
+                    viewId = 'teacherView';
+                    welcomeMsgId = 'teacherWelcomeMsg';
+                } else if (role === 'admin') {
+                    viewId = 'adminView';
+                    welcomeMsgId = 'adminWelcomeMsg';
+                }
+
+                navigateTo(viewId);
+                
+                // Update welcome message for the specific dashboard
+                document.getElementById(welcomeMsgId).innerText = `${translations.en.welcome} ${username} (${role})`;
+                
+                // Only students have a visible streak counter in this design
+                if (streakId) {
+                    document.getElementById(streakId).innerText = `${translations.en.streak} ${state.streak}`;
+                }
+            }
+        };
+
+        // ======================= STUDENT FEATURES MODULE =======================
+        const studentFeatures = {
+            checkQuizAnswer: function(button, isCorrect) {
+                document.getElementById('quizResult').innerText = isCorrect ? "✅ Correct!" : "❌ Wrong!";
+            },
+            generateProblem: function() {
+                const a = Math.floor(Math.random() * 10) + 1;
+                const b = Math.floor(Math.random() * 10) + 1;
+                state.quiz.currentAnswer = a + b;
+                document.getElementById('problem').innerText = `What is ${a} + ${b}?`;
+                document.getElementById('practiceResult').innerText = "";
+                document.getElementById('answerInput').value = "";
+            },
+            checkProblem: function() {
+                const userAnswer = parseInt(document.getElementById('answerInput').value);
+                const resultText = userAnswer === state.quiz.currentAnswer ? "✅ Correct!" : "❌ Wrong!";
+                document.getElementById('practiceResult').innerText = resultText;
+            }
+        };
+        
+        // ======================= CAREER GUIDANCE MODULE =======================
+        const careerGuidance = {
+            data: {
+                "9": { careers: ["Science Stream", "Commerce Stream", "Arts Stream"], details: { "Science Stream": "Focuses on PCM/B subjects → Leads to Engineering, Medical.", "Commerce Stream": "Accounts, Business Studies → Leads to CA, MBA, Finance.", "Arts Stream": "History, Political Science → Leads to UPSC, Journalism, Design." }},
+                "10": { careers: ["Vocational Training", "Diploma Courses", "Higher Secondary"], details: { "Vocational Training": "Skill-based ITI courses.", "Diploma Courses": "2-3 year job-oriented diplomas.", "Higher Secondary": "Choose Science, Commerce, Arts." }},
+                "11": { careers: ["Engineering Prep", "Medical Prep", "Commerce Professional", "Arts & Design"], details: { "Engineering Prep": "Prepare for JEE/IIT/NIT.", "Medical Prep": "Prepare for NEET, MBBS, Nursing.", "Commerce Professional": "CA, CS, CMA foundation.", "Arts & Design": "Law, Civil Services, Design." }},
+                "12": { careers: ["Engineering", "Medical", "Law", "Management", "Govt Exams"], details: { "Engineering": "B.Tech, Diploma, CS, IT.", "Medical": "MBBS, Nursing, Pharmacy.", "Law": "BA LLB, Judiciary exams.", "Management": "BBA, MBA, Startup.", "Govt Exams": "UPSC, SSC, Defence." }}
+            },
+            showCareers: function() {
+                const selectedClass = document.getElementById('classSelect').value;
+                const optionsDiv = document.getElementById('careerOptions');
+                const detailsDiv = document.getElementById('careerDetails');
+                optionsDiv.innerHTML = "";
+                detailsDiv.innerHTML = "";
+
+                if (this.data[selectedClass]) {
+                    const list = document.createElement('ul');
+                    this.data[selectedClass].careers.forEach(career => {
+                        const li = document.createElement('li');
+                        li.innerText = career;
+                        li.onclick = () => { 
+                            detailsDiv.innerHTML = `<strong>${career}</strong><p>${this.data[selectedClass].details[career]}</p>`; 
+                        };
+                        list.appendChild(li);
+                    });
+                    optionsDiv.appendChild(list);
+                }
+            }
+        };
+
+        // ======================= LANGUAGE SWITCHER =======================
+        document.getElementById('languageSwitcher').addEventListener('change', (e) => {
+            const lang = e.target.value;
+            // You can expand this to translate all relevant texts
+            document.querySelector('#loginSection h2').innerText = translations[lang].login;
+        });
+
+        // ======================= APP INITIALIZATION =======================
+        window.onload = () => {
+            const savedUser = localStorage.getItem('user');
+            if (savedUser) {
+                state.currentUser = JSON.parse(savedUser);
+                state.streak = parseInt(localStorage.getItem('streak') || 1);
+                auth.showDashboard();
+            } else {
+                navigateTo('loginView');
+            }
+        };
+    </script>
 </body>
 </html>
