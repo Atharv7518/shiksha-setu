@@ -110,9 +110,14 @@
                         <p>Student: Simran | Quiz Score: 60% | Practice: 5/10</p>
                     </div>
                 </div>
-                <div onclick="ui.navigateTo('teacherTestView')" class="bg-white p-6 rounded-lg shadow-md hover:shadow-xl hover:-translate-y-1 transition-all duration-300 cursor-pointer">
+                <div id="teacherTestCard" onclick="ui.navigateTo('teacherTestView')" class="bg-white p-6 rounded-lg shadow-md hover:shadow-xl hover:-translate-y-1 transition-all duration-300 cursor-pointer">
                     <h3 class="text-xl font-bold mb-2" data-translate="teacher_card_test_title">Teacher Level Test</h3>
                     <p class="text-gray-600" data-translate="teacher_card_test_desc">Take a test to assess your skills and get a course.</p>
+                </div>
+                <!-- This card will appear after the test is taken -->
+                <div id="assignedCourseCard" class="bg-white p-6 rounded-lg shadow-md hover:shadow-xl hover:-translate-y-1 transition-all duration-300 cursor-pointer hidden" onclick="ui.navigateTo('teacherCourseView')">
+                    <h3 class="text-xl font-bold mb-2" data-translate="teacher_assigned_course_title">Your Assigned Course</h3>
+                    <p class="text-gray-600" data-translate="teacher_assigned_course_desc">Intermediate Digital Tools for Educators. Click to start.</p>
                 </div>
                  <div onclick="ui.navigateTo('profileView')" class="bg-white p-6 rounded-lg shadow-md hover:shadow-xl hover:-translate-y-1 transition-all duration-300 cursor-pointer">
                     <h3 class="text-xl font-bold mb-2" data-translate="profile_title">Profile & Settings</h3>
@@ -145,15 +150,23 @@
         
         <!-- ======================= SUB-VIEWS (EBOOK, VIDEO, ETC) ======================= -->
         
-        <!-- Interactive eBook View -->
+        <!-- Interactive eBook Hub View -->
         <div id="ebookView" class="view">
             <button onclick="ui.backToDashboard()" class="mb-4 bg-gray-500 hover:bg-gray-600 text-white font-bold py-2 px-4 rounded">&larr; <span data-translate="back_button">Back to Dashboard</span></button>
             <div class="bg-white p-8 rounded-lg shadow-lg">
-                <h2 class="text-2xl font-bold mb-4" data-translate="ebook_title">Chapter 1: The Foundation</h2>
-                <p class="text-lg leading-relaxed">
-                    <span onclick="ui.showMeaning('Education', 'The process of receiving or giving systematic instruction.')" class="cursor-pointer font-bold text-blue-600 hover:underline">Education</span> is the most powerful weapon which you can use to change the world. It builds a strong 
-                    <span onclick="ui.showMeaning('Bridge', 'A structure carrying a road, path, railway, etc. across a river, road, or other obstacle.')" class="cursor-pointer font-bold text-blue-600 hover:underline">bridge</span> to the future.
-                </p>
+                <h2 class="text-2xl font-bold mb-4" data-translate="ebook_main_title">eBook: Our Solar System</h2>
+                <div id="ebookChapterList" class="space-y-4">
+                    <!-- eBook chapters will be dynamically inserted here -->
+                </div>
+            </div>
+        </div>
+        
+        <!-- Interactive eBook Chapter View -->
+        <div id="ebookChapterView" class="view">
+            <button onclick="ui.navigateTo('ebookView')" class="mb-4 bg-gray-500 hover:bg-gray-600 text-white font-bold py-2 px-4 rounded">&larr; <span data-translate="back_to_ebook_chapters">Back to Chapters</span></button>
+            <div class="bg-white p-8 rounded-lg shadow-lg">
+                <h2 id="ebookChapterTitle" class="text-3xl font-bold mb-4"></h2>
+                <div id="ebookChapterContent" class="prose max-w-none text-gray-700 leading-relaxed"></div>
                 <textarea class="w-full mt-6 p-2 border rounded" rows="5" placeholder="Write your notes here..."></textarea>
             </div>
         </div>
@@ -247,6 +260,16 @@
              </div>
         </div>
 
+        <!-- ======================= TEACHER COURSE VIEW ======================= -->
+        <div id="teacherCourseView" class="view">
+            <button onclick="ui.backToDashboard()" class="mb-4 bg-gray-500 hover:bg-gray-600 text-white font-bold py-2 px-4 rounded">&larr; <span data-translate="back_button">Back to Dashboard</span></button>
+            <div class="bg-white p-8 rounded-lg shadow-lg">
+                <h2 class="text-3xl font-bold mb-4" data-translate="teacher_course_title">Intermediate Digital Tools</h2>
+                <div class="prose max-w-none text-gray-700 leading-relaxed" data-translate="teacher_course_content">
+                </div>
+            </div>
+        </div>
+
         <!-- Profile & Settings View -->
         <div id="profileView" class="view">
             <button onclick="ui.backToDashboard()" class="mb-4 bg-gray-500 hover:bg-gray-600 text-white font-bold py-2 px-4 rounded">&larr; <span data-translate="back_button">Back to Dashboard</span></button>
@@ -297,11 +320,17 @@
                 student_card_practice_title: "Practice Section", student_card_practice_desc: "Solve extra problems to master concepts.",
                 student_card_computer_title: "Computer Fundamentals", student_card_computer_desc: "Learn the basics of computers and IT skills.",
                 student_card_career_title: "Career Guidance", student_card_career_desc: "Explore future career paths and options.",
-                back_button: "Back to Dashboard", ebook_title: "Chapter 1: The Foundation", video_title_computer: "What is a Computer? - Basics", quiz_title: "Knowledge Check",
+                back_button: "Back to Dashboard", ebook_main_title: "eBook: Our Solar System", back_to_ebook_chapters: "Back to Chapters",
+                video_title_computer: "What is a Computer? - Basics", quiz_title: "Knowledge Check",
                 quiz_next_question: "Next Question", quiz_finished: "Quiz Finished! Your score: {score}/{total}",
                 practice_title: "Problem Solving", practice_generate: "Generate New Problem", practice_submit: "Submit",
                 teacher_card_progress_title: "Student Progress", teacher_card_test_title: "Teacher Level Test", teacher_card_test_desc: "Take a test to assess your skills and get a course.",
                 teacher_test_desc: "Answer these questions to determine your proficiency level.", teacher_test_start: "Start Test",
+                teacher_test_result: "Test Complete! An Intermediate course has been assigned on your dashboard.",
+                teacher_assigned_course_title: "Your Assigned Course",
+                teacher_assigned_course_desc: "Intermediate Digital Tools for Educators. Click to start.",
+                teacher_course_title: "Intermediate Digital Tools",
+                teacher_course_content: "<p>This course is designed for teachers who have a basic understanding of computers but want to learn about modern digital tools for the classroom.</p><h3 class='font-bold mt-4'>Module 1: Using Google Classroom</h3><p>Learn how to set up your class, create assignments, grade submissions, and communicate with students effectively using Google Classroom.</p><h3 class='font-bold mt-4'>Module 2: Creating Interactive Presentations</h3><p>Explore tools like Canva and Google Slides to create visually engaging presentations that capture student interest. Learn about embedding videos, creating animations, and using interactive Q&A features.</p>",
                 admin_card_notification_title: "Send Notifications", send_button: "Send", admin_card_feedback_title: "View Feedback",
                 profile_title: "Profile & Settings", profile_desc: "Manage your account and settings.", profile_username: "Username", profile_role: "Role", profile_change_password: "Change Password", profile_notifications: "Email Notifications",
                 career_select_class: "Select Your Class:", back_to_chapters: "Back to Chapters", take_chapter_quiz: "Take Chapter Quiz"
@@ -315,11 +344,17 @@
                 student_card_practice_title: "अभ्यास", student_card_practice_desc: "अवधारणाओं में महारत हासिल करने के लिए अतिरिक्त समस्याओं का समाधान करें।",
                 student_card_computer_title: "कंप्यूटर की मूल बातें", student_card_computer_desc: "कंप्यूटर और आईटी कौशल की मूल बातें जानें।",
                 student_card_career_title: "करियर मार्गदर्शन", student_card_career_desc: "भविष्य के करियर पथों और विकल्पों का अन्वेषण करें।",
-                back_button: "डैशबोर्ड पर वापस जाएं", ebook_title: "अध्याय 1: नींव", video_title_computer: "कंप्यूटर क्या है? - मूल बातें", quiz_title: "ज्ञान जांच",
+                back_button: "डैशबोर्ड पर वापस जाएं", ebook_main_title: "ई-पुस्तक: हमारा सौर मंडल", back_to_ebook_chapters: "अध्यायों पर वापस जाएं",
+                video_title_computer: "कंप्यूटर क्या है? - मूल बातें", quiz_title: "ज्ञान जांच",
                 quiz_next_question: "अगला प्रश्न", quiz_finished: "प्रश्नोत्तरी समाप्त! आपका स्कोर: {score}/{total}",
                 practice_title: "समस्या को सुलझाना", practice_generate: "नई समस्या उत्पन्न करें", practice_submit: "जमा करें",
                 teacher_card_progress_title: "छात्र प्रगति", teacher_card_test_title: "शिक्षक स्तर परीक्षण", teacher_card_test_desc: "अपने कौशल का आकलन करने और एक कोर्स प्राप्त करने के लिए एक परीक्षा दें।",
                 teacher_test_desc: "अपनी प्रवीणता स्तर निर्धारित करने के लिए इन सवालों के जवाब दें।", teacher_test_start: "परीक्षण शुरू करें",
+                teacher_test_result: "परीक्षण पूरा हुआ! आपके डैशबोर्ड पर एक इंटरमीडिएट कोर्स सौंपा गया है।",
+                teacher_assigned_course_title: "आपका निर्धारित पाठ्यक्रम",
+                teacher_assigned_course_desc: "शिक्षकों के लिए इंटरमीडिएट डिजिटल उपकरण। शुरू करने के लिए क्लिक करें।",
+                teacher_course_title: "इंटरमीडिएट डिजिटल उपकरण",
+                teacher_course_content: "<p>यह पाठ्यक्रम उन शिक्षकों के लिए डिज़ाइन किया गया है जिनके पास कंप्यूटर की बुनियादी समझ है, लेकिन वे कक्षा के लिए आधुनिक डिजिटल टूल के बारे में जानना चाहते हैं।</p><h3 class='font-bold mt-4'>मॉड्यूल 1: गूगल क्लासरूम का उपयोग करना</h3><p>जानें कि अपनी कक्षा कैसे सेट करें, असाइनमेंट बनाएं, सबमिशन ग्रेड करें और गूगल क्लासरूम का उपयोग करके छात्रों के साथ प्रभावी ढंग से संवाद करें।</p><h3 class='font-bold mt-4'>मॉड्यूल 2: इंटरैक्टिव प्रस्तुतियाँ बनाना</h3><p>दृश्यात्मक रूप से आकर्षक प्रस्तुतियाँ बनाने के लिए कैनवा और गूगल स्लाइड्स जैसे टूल का अन्वेषण करें जो छात्रों की रुचि को आकर्षित करते हैं। वीडियो एम्बेड करने, एनिमेशन बनाने और इंटरैक्टिव प्रश्नोत्तर सुविधाओं का उपयोग करने के बारे में जानें।</p>",
                 admin_card_notification_title: "सूचनाएं भेजें", send_button: "भेजें", admin_card_feedback_title: "प्रतिक्रिया देखें",
                 profile_title: "प्रोफ़ाइल और सेटिंग्स", profile_desc: "अपना खाता और सेटिंग्स प्रबंधित करें।", profile_username: "उपयोगकर्ता नाम", profile_role: "भूमिका", profile_change_password: "पासवर्ड बदलें", profile_notifications: "ईमेल सूचनाएं",
                 career_select_class: "अपनी कक्षा चुनें:", back_to_chapters: "अध्यायों पर वापस जाएं", take_chapter_quiz: "अध्याय प्रश्नोत्तरी लें"
@@ -333,11 +368,17 @@
                 student_card_practice_title: "ਅਭਿਆਸ ਸੈਕਸ਼ਨ", student_card_practice_desc: "ਸੰਕਲਪਾਂ ਵਿੱਚ ਮੁਹਾਰਤ ਹਾਸਲ ਕਰਨ ਲਈ ਵਾਧੂ ਸਮੱਸਿਆਵਾਂ ਨੂੰ ਹੱਲ ਕਰੋ।",
                 student_card_computer_title: "ਕੰਪਿਊਟਰ ਫੰਡਾਮੈਂਟਲਜ਼", student_card_computer_desc: "ਕੰਪਿਊਟਰ ਅਤੇ IT ਦੇ ਹੁਨਰ ਦੀਆਂ ਮੂਲ ਗੱਲਾਂ ਸਿੱਖੋ।",
                 student_card_career_title: "ਕਰੀਅਰ ਮਾਰਗਦਰਸ਼ਨ", student_card_career_desc: "ਭਵਿੱਖ ਦੇ ਕਰੀਅਰ ਦੇ ਰਸਤੇ ਅਤੇ ਵਿਕਲਪਾਂ ਦੀ ਪੜਚੋਲ ਕਰੋ।",
-                back_button: "ਡੈਸ਼ਬੋਰਡ 'ਤੇ ਵਾਪਸ ਜਾਓ", ebook_title: "ਅਧਿਆਇ 1: ਨੀਂਹ", video_title_computer: "ਕੰਪਿਊਟਰ ਕੀ ਹੈ? - ਮੂਲ ਗੱਲਾਂ", quiz_title: "ਗਿਆਨ ਦੀ ਜਾਂਚ",
+                back_button: "ਡੈਸ਼ਬੋਰਡ 'ਤੇ ਵਾਪਸ ਜਾਓ", ebook_main_title: "ਈ-ਕਿਤਾਬ: ਸਾਡਾ ਸੂਰਜੀ ਸਿਸਟਮ", back_to_ebook_chapters: "ਅਧਿਆਇ 'ਤੇ ਵਾਪਸ ਜਾਓ",
+                video_title_computer: "ਕੰਪਿਊਟਰ ਕੀ ਹੈ? - ਮੂਲ ਗੱਲਾਂ", quiz_title: "ਗਿਆਨ ਦੀ ਜਾਂਚ",
                 quiz_next_question: "ਅਗਲਾ ਸਵਾਲ", quiz_finished: "ਕਵਿਜ਼ ਸਮਾਪਤ! ਤੁਹਾਡਾ ਸਕੋਰ: {score}/{total}",
                 practice_title: "ਸਮੱਸਿਆ ਹੱਲ ਕਰਨਾ", practice_generate: "ਨਵੀਂ ਸਮੱਸਿਆ ਬਣਾਓ", practice_submit: "ਜਮ੍ਹਾਂ ਕਰੋ",
                 teacher_card_progress_title: "ਵਿਦਿਆਰਥੀ ਦੀ ਤਰੱਕੀ", teacher_card_test_title: "ਅਧਿਆਪਕ ਪੱਧਰ ਦਾ ਟੈਸਟ", teacher_card_test_desc: "ਆਪਣੇ ਹੁਨਰ ਦਾ ਮੁਲਾਂਕਣ ਕਰਨ ਅਤੇ ਕੋਰਸ ਪ੍ਰਾਪਤ ਕਰਨ ਲਈ ਇੱਕ ਟੈਸਟ ਦਿਓ।",
                 teacher_test_desc: "ਆਪਣੀ ਮੁਹਾਰਤ ਦੇ ਪੱਧਰ ਨੂੰ ਨਿਰਧਾਰਤ ਕਰਨ ਲਈ ਇਹਨਾਂ ਸਵਾਲਾਂ ਦੇ ਜਵਾਬ ਦਿਓ।", teacher_test_start: "ਟੈਸਟ ਸ਼ੁਰੂ ਕਰੋ",
+                teacher_test_result: "ਟੈਸਟ ਪੂਰਾ ਹੋਇਆ! ਤੁਹਾਡੇ ਡੈਸ਼ਬੋਰਡ 'ਤੇ ਇੱਕ ਇੰਟਰਮੀਡੀਏਟ ਕੋਰਸ ਦਿੱਤਾ ਗਿਆ ਹੈ।",
+                teacher_assigned_course_title: "ਤੁਹਾਡਾ ਸੌਂਪਿਆ ਗਿਆ ਕੋਰਸ",
+                teacher_assigned_course_desc: "ਸਿੱਖਿਅਕਾਂ ਲਈ ਇੰਟਰਮੀਡੀਏਟ ਡਿਜੀਟਲ ਟੂਲ। ਸ਼ੁਰੂ ਕਰਨ ਲਈ ਕਲਿੱਕ ਕਰੋ।",
+                teacher_course_title: "ਇੰਟਰਮੀਡੀਏਟ ਡਿਜੀਟਲ ਟੂਲ",
+                teacher_course_content: "<p>ਇਹ ਕੋਰਸ ਉਹਨਾਂ ਅਧਿਆਪਕਾਂ ਲਈ ਤਿਆਰ ਕੀਤਾ ਗਿਆ ਹੈ ਜਿਨ੍ਹਾਂ ਨੂੰ ਕੰਪਿਊਟਰ ਦੀ ਮੁੱਢਲੀ ਸਮਝ ਹੈ ਪਰ ਉਹ ਕਲਾਸਰੂਮ ਲਈ ਆਧੁਨਿਕ ਡਿਜੀਟਲ ਸਾਧਨਾਂ ਬਾਰੇ ਸਿੱਖਣਾ ਚਾਹੁੰਦੇ ਹਨ।</p><h3 class='font-bold mt-4'>ਮੌਡਿਊਲ 1: ਗੂਗਲ ਕਲਾਸਰੂਮ ਦੀ ਵਰਤੋਂ ਕਰਨਾ</h3><p>ਸਿੱਖੋ ਕਿ ਆਪਣੀ ਕਲਾਸ ਕਿਵੇਂ ਸਥਾਪਤ ਕਰਨੀ ਹੈ, ਅਸਾਈਨਮੈਂਟ ਬਣਾਉਣੇ ਹਨ, ਸਬਮਿਸ਼ਨਾਂ ਨੂੰ ਗ੍ਰੇਡ ਕਰਨਾ ਹੈ, ਅਤੇ ਗੂਗਲ ਕਲਾਸਰੂਮ ਦੀ ਵਰਤੋਂ ਕਰਕੇ ਵਿਦਿਆਰਥੀਆਂ ਨਾਲ ਪ੍ਰਭਾਵਸ਼ਾਲੀ ਢੰਗ ਨਾਲ ਸੰਚਾਰ ਕਰਨਾ ਹੈ।</p><h3 class='font-bold mt-4'>ਮੌਡਿਊਲ 2: ਇੰਟਰਐਕਟਿਵ ਪੇਸ਼ਕਾਰੀਆਂ ਬਣਾਉਣਾ</h3><p>ਦ੍ਰਿਸ਼ਟੀਗਤ ਤੌਰ 'ਤੇ ਦਿਲਚਸਪ ਪੇਸ਼ਕਾਰੀਆਂ ਬਣਾਉਣ ਲਈ ਕੈਨਵਾ ਅਤੇ ਗੂਗਲ ਸਲਾਈਡਾਂ ਵਰਗੇ ਸਾਧਨਾਂ ਦੀ ਪੜਚੋਲ ਕਰੋ ਜੋ ਵਿਦਿਆਰਥੀਆਂ ਦੀ ਦਿਲਚਸਪੀ ਨੂੰ ਹਾਸਲ ਕਰਦੇ ਹਨ। ਵੀਡੀਓਜ਼ ਨੂੰ ਏਮਬੈੱਡ ਕਰਨ, ਐਨੀਮੇਸ਼ਨ ਬਣਾਉਣ, ਅਤੇ ਇੰਟਰਐਕਟਿਵ ਸਵਾਲ-ਜਵਾਬ ਵਿਸ਼ੇਸ਼ਤਾਵਾਂ ਦੀ ਵਰਤੋਂ ਕਰਨ ਬਾਰੇ ਸਿੱਖੋ।</p>",
                 admin_card_notification_title: "ਸੂਚਨਾਵਾਂ ਭੇਜੋ", send_button: "ਭੇਜੋ", admin_card_feedback_title: "ਫੀਡਬੈਕ ਵੇਖੋ",
                 profile_title: "ਪ੍ਰੋਫਾਈਲ ਅਤੇ ਸੈਟਿੰਗਾਂ", profile_desc: "ਆਪਣੇ ਖਾਤੇ ਅਤੇ ਸੈਟਿੰਗਾਂ ਦਾ ਪ੍ਰਬੰਧਨ ਕਰੋ।", profile_username: "ਉਪਭੋਗਤਾ ਨਾਮ", profile_role: "ਭੂਮਿਕਾ", profile_change_password: "ਪਾਸਵਰਡ ਬਦਲੋ", profile_notifications: "ਈਮੇਲ ਸੂਚਨਾਵਾਂ",
                 career_select_class: "ਆਪਣੀ ਕਲਾਸ ਚੁਣੋ:", back_to_chapters: "ਅਧਿਆਇ 'ਤੇ ਵਾਪਸ ਜਾਓ", take_chapter_quiz: "ਅਧਿਆਇ ਕਵਿਜ਼ ਲਵੋ"
@@ -369,10 +410,12 @@
                 if (state.currentUser) {
                     auth.updateWelcomeMessages();
                 }
-                computerCourse.renderChapters(); // Re-render chapters on language change
+                computerCourse.renderChapters();
+                ebook.renderChapters(); // Re-render ebook chapters on language change
             },
-            showMeaning: function(word, meaning) {
-                alert(`${word}: ${meaning}`);
+            showMeaning: function(meaningKey) {
+                const lang = state.currentLanguage;
+                alert(translations[lang][meaningKey] || "Meaning not found.");
             }
         };
 
@@ -441,6 +484,34 @@
             }
         };
         
+        // ======================= EBOOK MODULE =======================
+        const ebook = {
+            data: [
+                { titleKey: 'ebook_ch1_title', contentKey: 'ebook_ch1_content' },
+                { titleKey: 'ebook_ch2_title', contentKey: 'ebook_ch2_content' }
+            ],
+            renderChapters: function() {
+                const chapterListDiv = document.getElementById('ebookChapterList');
+                chapterListDiv.innerHTML = '';
+                this.data.forEach((chapter, index) => {
+                    const lang = state.currentLanguage;
+                    const title = translations[lang][chapter.titleKey] || `Chapter ${index + 1}`;
+                    const card = document.createElement('div');
+                    card.className = 'border p-4 rounded-lg cursor-pointer hover:bg-blue-100 hover:shadow-md transition-all';
+                    card.innerHTML = `<h3 class="font-bold text-lg text-blue-700">${title}</h3>`;
+                    card.onclick = () => this.openChapter(index);
+                    chapterListDiv.appendChild(card);
+                });
+            },
+            openChapter: function(index) {
+                const chapter = this.data[index];
+                const lang = state.currentLanguage;
+                document.getElementById('ebookChapterTitle').innerText = translations[lang][chapter.titleKey];
+                document.getElementById('ebookChapterContent').innerHTML = translations[lang][chapter.contentKey];
+                ui.navigateTo('ebookChapterView');
+            }
+        };
+
         // ======================= COMPUTER COURSE MODULE =======================
         const computerCourse = {
             data: [
@@ -580,8 +651,16 @@
         const teacherFeatures = {
             takeTest: function() {
                 const resultEl = document.getElementById('teacherTestResult');
-                resultEl.textContent = "Test Complete! Your level is Intermediate.";
+                const lang = state.currentLanguage;
+                resultEl.textContent = translations[lang].teacher_test_result;
                 resultEl.className = "mt-4 font-bold text-xl text-blue-600";
+                
+                // Use a timeout to allow the user to see the message before going back
+                setTimeout(() => {
+                    document.getElementById('teacherTestCard').classList.add('hidden');
+                    document.getElementById('assignedCourseCard').classList.remove('hidden');
+                    ui.backToDashboard();
+                }, 2500);
             }
         };
         
@@ -629,6 +708,43 @@
             translations.en.quiz_q1 = 'What does RAM stand for?'; translations.hi.quiz_q1 = 'RAM का मतलब क्या है?'; translations.pa.quiz_q1 = 'RAM ਦਾ ਕੀ ਅਰਥ ਹੈ?';
             translations.en.quiz_q2 = 'Which of these is an input device?'; translations.hi.quiz_q2 = 'इनमें से कौन सा एक इनपुट डिवाइस है?'; translations.pa.quiz_q2 = 'ਇਹਨਾਂ ਵਿੱਚੋਂ ਕਿਹੜਾ ਇੱਕ ਇਨਪੁਟ ਡਿਵਾਈਸ ਹੈ?';
             
+            // Ebook Content & Word Meanings
+            translations.en.ebook_ch1_title = "Chapter 1: The Sun";
+            translations.en.ebook_ch1_content = `Our Sun is a huge <span onclick="ui.showMeaning('meaning_star')" class="cursor-pointer font-bold text-blue-600 hover:underline">star</span> at the center of our <span onclick="ui.showMeaning('meaning_solarsystem')" class="cursor-pointer font-bold text-blue-600 hover:underline">solar system</span>. It is a nearly perfect ball of hot, glowing <span onclick="ui.showMeaning('meaning_gas')" class="cursor-pointer font-bold text-blue-600 hover:underline">gas</span>.`;
+            translations.en.meaning_star = "Star: A giant ball of hot gas that creates its own light and heat.";
+            translations.en.meaning_solarsystem = "Solar System: A star and all of the objects that travel around it, including planets, moons, and asteroids.";
+            translations.en.meaning_gas = "Gas: A state of matter that has no fixed shape and no fixed volume.";
+            
+            translations.hi.ebook_ch1_title = "अध्याय 1: सूर्य";
+            translations.hi.ebook_ch1_content = `हमारा सूर्य हमारे <span onclick="ui.showMeaning('meaning_solarsystem')" class="cursor-pointer font-bold text-blue-600 hover:underline">सौर मंडल</span> के केंद्र में एक विशाल <span onclick="ui.showMeaning('meaning_star')" class="cursor-pointer font-bold text-blue-600 hover:underline">तारा</span> है। यह गर्म, चमकती <span onclick="ui.showMeaning('meaning_gas')" class="cursor-pointer font-bold text-blue-600 hover:underline">गैस</span> का लगभग एक आदर्श गोला है।`;
+            translations.hi.meaning_star = "तारा: गर्म गैस का एक विशाल गोला जो अपना प्रकाश और गर्मी पैदा करता है।";
+            translations.hi.meaning_solarsystem = "सौर मंडल: एक तारा और उसके चारों ओर यात्रा करने वाली सभी वस्तुएं, जिनमें ग्रह, चंद्रमा और क्षुद्रग्रह शामिल हैं।";
+            translations.hi.meaning_gas = "गैस: पदार्थ की एक अवस्था जिसका कोई निश्चित आकार और कोई निश्चित आयतन नहीं होता है।";
+            
+            translations.pa.ebook_ch1_title = "ਅਧਿਆਇ 1: ਸੂਰਜ";
+            translations.pa.ebook_ch1_content = `ਸਾਡਾ ਸੂਰਜ ਸਾਡੇ <span onclick="ui.showMeaning('meaning_solarsystem')" class="cursor-pointer font-bold text-blue-600 hover:underline">ਸੂਰਜੀ ਸਿਸਟਮ</span> ਦੇ ਕੇਂਦਰ ਵਿੱਚ ਇੱਕ ਵਿਸ਼ਾਲ <span onclick="ui.showMeaning('meaning_star')" class="cursor-pointer font-bold text-blue-600 hover:underline">ਤਾਰਾ</span> ਹੈ। ਇਹ ਗਰਮ, ਚਮਕਦਾਰ <span onclick="ui.showMeaning('meaning_gas')" class="cursor-pointer font-bold text-blue-600 hover:underline">ਗੈਸ</span> ਦੀ ਲਗਭਗ ਇੱਕ ਸੰਪੂਰਨ ਗੇਂਦ ਹੈ।`;
+            translations.pa.meaning_star = "ਤਾਰਾ: ਗਰਮ ਗੈਸ ਦੀ ਇੱਕ ਵਿਸ਼ਾਲ ਗੇਂਦ ਜੋ ਆਪਣੀ ਰੋਸ਼ਨੀ ਅਤੇ ਗਰਮੀ ਪੈਦਾ ਕਰਦੀ ਹੈ।";
+            translations.pa.meaning_solarsystem = "ਸੂਰਜੀ ਸਿਸਟਮ: ਇੱਕ ਤਾਰਾ ਅਤੇ ਉਹ ਸਾਰੀਆਂ ਵਸਤੂਆਂ ਜੋ ਇਸਦੇ ਦੁਆਲੇ ਘੁੰਮਦੀਆਂ ਹਨ, ਜਿਸ ਵਿੱਚ ਗ੍ਰਹਿ, ਚੰਦਰਮਾ ਅਤੇ ਐਸਟੇਰੋਇਡ ਸ਼ਾਮਲ ਹਨ।";
+            translations.pa.meaning_gas = "ਗੈਸ: ਪਦਾਰਥ ਦੀ ਇੱਕ ਅਵਸਥਾ ਜਿਸਦਾ ਕੋਈ ਨਿਸ਼ਚਿਤ ਆਕਾਰ ਅਤੇ ਕੋਈ ਨਿਸ਼ਚਿਤ ਮਾਤਰਾ ਨਹੀਂ ਹੁੰਦੀ।";
+            
+            translations.en.ebook_ch2_title = "Chapter 2: The Inner Planets";
+            translations.en.ebook_ch2_content = `The planets closest to the sun are called the inner planets. They are <span onclick="ui.showMeaning('meaning_mercury')" class="cursor-pointer font-bold text-blue-600 hover:underline">Mercury</span>, Venus, <span onclick="ui.showMeaning('meaning_earth')" class="cursor-pointer font-bold text-blue-600 hover:underline">Earth</span>, and <span onclick="ui.showMeaning('meaning_mars')" class="cursor-pointer font-bold text-blue-600 hover:underline">Mars</span>. They are also known as the terrestrial planets because they have solid, rocky surfaces.`;
+            translations.en.meaning_mercury = "Mercury: The smallest planet in our solar system and nearest to the Sun.";
+            translations.en.meaning_earth = "Earth: Our home planet, the only place known to harbor life.";
+            translations.en.meaning_mars = "Mars: Known as the 'Red Planet' due to its reddish appearance.";
+            
+            translations.hi.ebook_ch2_title = "अध्याय 2: आंतरिक ग्रह";
+            translations.hi.ebook_ch2_content = `सूर्य के सबसे निकट के ग्रहों को आंतरिक ग्रह कहा जाता है। वे हैं <span onclick="ui.showMeaning('meaning_mercury')" class="cursor-pointer font-bold text-blue-600 hover:underline">बुध</span>, शुक्र, <span onclick="ui.showMeaning('meaning_earth')" class="cursor-pointer font-bold text-blue-600 hover:underline">पृथ्वी</span>, और <span onclick="ui.showMeaning('meaning_mars')" class="cursor-pointer font-bold text-blue-600 hover:underline">मंगल</span>। उन्हें स्थलीय ग्रह के रूप में भी जाना जाता है क्योंकि उनकी ठोस, चट्टानी सतह होती है।`;
+            translations.hi.meaning_mercury = "बुध: हमारे सौर मंडल का सबसे छोटा ग्रह और सूर्य के सबसे निकट।";
+            translations.hi.meaning_earth = "पृथ्वी: हमारा गृह ग्रह, जीवन को आश्रय देने वाला एकमात्र ज्ञात स्थान।";
+            translations.hi.meaning_mars = "मंगल: अपनी लालिमा युक्त उपस्थिति के कारण 'लाल ग्रह' के रूप में जाना जाता है।";
+            
+            translations.pa.ebook_ch2_title = "ਅਧਿਆਇ 2: ਅੰਦਰੂਨੀ ਗ੍ਰਹਿ";
+            translations.pa.ebook_ch2_content = `ਸੂਰਜ ਦੇ ਸਭ ਤੋਂ ਨਜ਼ਦੀਕੀ ਗ੍ਰਹਿਆਂ ਨੂੰ ਅੰਦਰੂਨੀ ਗ੍ਰਹਿ ਕਿਹਾ ਜਾਂਦਾ ਹੈ। ਉਹ ਹਨ <span onclick="ui.showMeaning('meaning_mercury')" class="cursor-pointer font-bold text-blue-600 hover:underline">ਬੁਧ</span>, ਸ਼ੁੱਕਰ, <span onclick="ui.showMeaning('meaning_earth')" class="cursor-pointer font-bold text-blue-600 hover:underline">ਧਰਤੀ</span>, ਅਤੇ <span onclick="ui.showMeaning('meaning_mars')" class="cursor-pointer font-bold text-blue-600 hover:underline">ਮੰਗਲ</span>। ਉਹਨਾਂ ਨੂੰ ਧਰਤੀ ਦੇ ਗ੍ਰਹਿ ਵੀ ਕਿਹਾ ਜਾਂਦਾ ਹੈ ਕਿਉਂਕਿ ਉਹਨਾਂ ਦੀਆਂ ਠੋਸ, ਪਥਰੀਲੀਆਂ ਸਤਹਾਂ ਹੁੰਦੀਆਂ ਹਨ।`;
+            translations.pa.meaning_mercury = "ਬੁਧ: ਸਾਡੇ ਸੂਰਜੀ ਸਿਸਟਮ ਦਾ ਸਭ ਤੋਂ ਛੋਟਾ ਗ੍ਰਹਿ ਅਤੇ ਸੂਰਜ ਦੇ ਸਭ ਤੋਂ ਨੇੜੇ।";
+            translations.pa.meaning_earth = "ਧਰਤੀ: ਸਾਡਾ ਘਰੇਲੂ ਗ੍ਰਹਿ, ਜੀਵਨ ਨੂੰ ਬੰਦਰਗਾਹ ਵਜੋਂ ਜਾਣਿਆ ਜਾਂਦਾ ਇਕੋ-ਇਕ ਸਥਾਨ।";
+            translations.pa.meaning_mars = "ਮੰਗਲ: ਇਸਦੀ ਲਾਲ ਰੰਗਤ ਦਿੱਖ ਕਾਰਨ 'ਲਾਲ ਗ੍ਰਹਿ' ਵਜੋਂ ਜਾਣਿਆ ਜਾਂਦਾ ਹੈ।";
+
             // CCC Course Content & Quizzes
             // Chapter 1
             translations.en.ccc_ch1_title = "Chapter 1: Introduction to Computers";
