@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Shiksha Setu</title>
-    <!-- Tailwind CSS for a clean, modern UI -->
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         /* Simple style to manage view visibility */
@@ -16,88 +15,147 @@
             animation: fadeIn 0.5s;
         }
         @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
         }
         /* Custom scrollbar for a cleaner look */
         ::-webkit-scrollbar { width: 8px; }
         ::-webkit-scrollbar-track { background: #f1f1f1; }
         ::-webkit-scrollbar-thumb { background: #888; border-radius: 4px; }
         ::-webkit-scrollbar-thumb:hover { background: #555; }
+        /* Custom toggle switch style */
+        .toggle-checkbox:checked { right: 0; border-color: #48bb78; }
+        .toggle-checkbox:checked + .toggle-label { background-color: #48bb78; }
     </style>
 </head>
-<body class="bg-gray-100 font-sans">
+<body class="bg-gradient-to-br from-gray-50 to-blue-100 font-sans min-h-screen">
 
-    <!-- Header: App Title & Language Switcher -->
     <header class="bg-blue-600 text-white p-4 shadow-md sticky top-0 z-50 flex justify-between items-center">
-        <h1 class="text-2xl font-bold" data-translate="app_title">Shiksha Setu</h1>
-        <select id="languageSwitcher" class="bg-blue-700 text-white rounded p-2 cursor-pointer">
+        <div class="flex items-center gap-3">
+             <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" viewBox="0 0 20 20" fill="currentColor">
+                <path d="M9 4.804A7.968 7.968 0 005.5 4c-1.255 0-2.443.29-3.5.804v10A7.969 7.969 0 005.5 16c1.255 0 2.443-.29 3.5-.804V4.804zM14.5 4A7.969 7.969 0 0011 4.804v10A7.968 7.968 0 0014.5 16c1.255 0 2.443-.29 3.5-.804v-10A7.968 7.968 0 0014.5 4z" />
+            </svg>
+            <h1 class="text-2xl font-bold" data-translate="app_title">Shiksha Setu</h1>
+        </div>
+        <select id="languageSwitcher" class="bg-blue-700 text-white rounded p-2 cursor-pointer focus:outline-none focus:ring-2 focus:ring-blue-300">
             <option value="en">English</option>
             <option value="hi">हिंदी</option>
             <option value="pa">ਪੰਜਾਬੀ</option>
         </select>
     </header>
 
-    <!-- Main Application Container -->
     <main id="app" class="p-4 md:p-8">
 
-        <!-- ======================= LOGIN VIEW ======================= -->
         <div id="loginView" class="view max-w-md mx-auto">
-            <div class="bg-white p-8 rounded-lg shadow-lg">
+            <div class="bg-white p-8 rounded-lg shadow-xl">
                 <h2 class="text-3xl font-bold text-center text-gray-800 mb-6" data-translate="login_heading">Login</h2>
-                <div class="space-y-4">
-                    <input type="text" id="username" class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="Username">
-                    <input type="password" id="password" class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="Password">
+                <div class="space-y-6">
+                    <div class="relative">
+                        <span class="absolute inset-y-0 left-0 flex items-center pl-3">
+                           <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-400" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd" /></svg>
+                        </span>
+                        <input type="text" id="username" class="w-full pl-10 px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="Username">
+                    </div>
+                    <div class="relative">
+                        <span class="absolute inset-y-0 left-0 flex items-center pl-3">
+                           <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-400" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z" clip-rule="evenodd" /></svg>
+                        </span>
+                        <input type="password" id="password" class="w-full pl-10 px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="Password">
+                    </div>
                     <select id="role" class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
                         <option value="student" data-translate="role_student">Student</option>
                         <option value="teacher" data-translate="role_teacher">Teacher</option>
                         <option value="admin" data-translate="role_admin">Admin</option>
                     </select>
-                    <button onclick="auth.login()" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg transition duration-300" data-translate="login_button">Login</button>
+                    <button onclick="auth.login()" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-4 rounded-lg transition duration-300 text-lg" data-translate="login_button">Login</button>
                 </div>
+                 <p class="text-center text-gray-600 mt-6">
+                    <span data-translate="prompt_signup">Don't have an account?</span>
+                    <a href="#" onclick="ui.navigateTo('signUpView')" class="font-semibold text-blue-600 hover:text-blue-800" data-translate="signup_link">Sign Up</a>
+                </p>
             </div>
         </div>
 
-        <!-- ======================= STUDENT DASHBOARD VIEW ======================= -->
+        <div id="signUpView" class="view max-w-md mx-auto">
+             <div class="bg-white p-8 rounded-lg shadow-xl">
+                <h2 class="text-3xl font-bold text-center text-gray-800 mb-6" data-translate="signup_heading">Create Account</h2>
+                <div class="space-y-6">
+                    <div class="relative">
+                        <span class="absolute inset-y-0 left-0 flex items-center pl-3">
+                           <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-400" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd" /></svg>
+                        </span>
+                        <input type="text" id="signupUsername" class="w-full pl-10 px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="Username">
+                    </div>
+                    <div class="relative">
+                        <span class="absolute inset-y-0 left-0 flex items-center pl-3">
+                           <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-400" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z" clip-rule="evenodd" /></svg>
+                        </span>
+                        <input type="password" id="signupPassword" class="w-full pl-10 px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="Password">
+                    </div>
+                    <div class="relative">
+                        <span class="absolute inset-y-0 left-0 flex items-center pl-3">
+                           <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-400" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z" clip-rule="evenodd" /></svg>
+                        </span>
+                        <input type="password" id="signupConfirmPassword" class="w-full pl-10 px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" data-translate-placeholder="confirm_password_placeholder">
+                    </div>
+                    <select id="signupRole" class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+                        <option value="student" data-translate="role_student">Student</option>
+                        <option value="teacher" data-translate="role_teacher">Teacher</option>
+                        <option value="admin" data-translate="role_admin">Admin</option>
+                    </select>
+                    <button onclick="auth.signUp()" class="w-full bg-green-600 hover:bg-green-700 text-white font-bold py-3 px-4 rounded-lg transition duration-300 text-lg" data-translate="signup_button">Sign Up</button>
+                </div>
+                 <p class="text-center text-gray-600 mt-6">
+                    <span data-translate="prompt_login">Already have an account?</span>
+                    <a href="#" onclick="ui.navigateTo('loginView')" class="font-semibold text-blue-600 hover:text-blue-800" data-translate="login_link">Login</a>
+                </p>
+            </div>
+        </div>
+
         <div id="studentDashboardView" class="view">
             <div class="mb-6 bg-white p-4 rounded-lg shadow-md">
                 <h2 id="studentWelcomeMsg" class="text-2xl font-bold text-gray-800"></h2>
-                <p id="studentStreak" class="text-md text-green-600"></p>
+                <p id="studentStreak" class="text-md text-green-600 font-semibold"></p>
             </div>
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                <!-- Dashboard cards -->
-                <div onclick="ui.navigateTo('ebookView')" class="bg-white p-6 rounded-lg shadow-md hover:shadow-xl hover:-translate-y-1 transition-all duration-300 cursor-pointer">
+                <div onclick="ui.navigateTo('ebookView')" class="bg-white p-6 rounded-lg shadow-md hover:shadow-xl hover:-translate-y-1 transition-all duration-300 cursor-pointer flex flex-col items-center text-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 mb-3 text-blue-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6.253v11.494m-6.75-7.227l13.5 0M4 12.753l16 0M4 16.253l16 0M4 9.253l16 0" /></svg>
                     <h3 class="text-xl font-bold mb-2" data-translate="student_card_ebook_title">Interactive eBook</h3>
                     <p class="text-gray-600" data-translate="student_card_ebook_desc">Read chapters, take notes, and learn interactively.</p>
                 </div>
-                <div onclick="ui.navigateTo('videoView')" class="bg-white p-6 rounded-lg shadow-md hover:shadow-xl hover:-translate-y-1 transition-all duration-300 cursor-pointer">
+                <div onclick="ui.navigateTo('videoView')" class="bg-white p-6 rounded-lg shadow-md hover:shadow-xl hover:-translate-y-1 transition-all duration-300 cursor-pointer flex flex-col items-center text-center">
+                   <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 mb-3 text-red-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z" /></svg>
                     <h3 class="text-xl font-bold mb-2" data-translate="student_card_video_title">Animated Lectures</h3>
                     <p class="text-gray-600" data-translate="student_card_video_desc">Watch short, engaging animated videos.</p>
                 </div>
-                <div onclick="studentFeatures.startQuiz()" class="bg-white p-6 rounded-lg shadow-md hover:shadow-xl hover:-translate-y-1 transition-all duration-300 cursor-pointer">
+                <div onclick="studentFeatures.startQuiz()" class="bg-white p-6 rounded-lg shadow-md hover:shadow-xl hover:-translate-y-1 transition-all duration-300 cursor-pointer flex flex-col items-center text-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 mb-3 text-green-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
                     <h3 class="text-xl font-bold mb-2" data-translate="student_card_quiz_title">Quizzes</h3>
                     <p class="text-gray-600" data-translate="student_card_quiz_desc">Test your knowledge after every lesson.</p>
                 </div>
-                <div onclick="studentFeatures.startPractice()" class="bg-white p-6 rounded-lg shadow-md hover:shadow-xl hover:-translate-y-1 transition-all duration-300 cursor-pointer">
+                <div onclick="studentFeatures.startPractice()" class="bg-white p-6 rounded-lg shadow-md hover:shadow-xl hover:-translate-y-1 transition-all duration-300 cursor-pointer flex flex-col items-center text-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 mb-3 text-purple-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" /></svg>
                     <h3 class="text-xl font-bold mb-2" data-translate="student_card_practice_title">Practice Section</h3>
                     <p class="text-gray-600" data-translate="student_card_practice_desc">Solve extra problems to master concepts.</p>
                 </div>
-                <div onclick="ui.navigateTo('computerCourseView')" class="bg-white p-6 rounded-lg shadow-md hover:shadow-xl hover:-translate-y-1 transition-all duration-300 cursor-pointer">
+                <div onclick="ui.navigateTo('computerCourseView')" class="bg-white p-6 rounded-lg shadow-md hover:shadow-xl hover:-translate-y-1 transition-all duration-300 cursor-pointer flex flex-col items-center text-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 mb-3 text-indigo-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" /></svg>
                     <h3 class="text-xl font-bold mb-2" data-translate="student_card_computer_title">Computer Fundamentals</h3>
                     <p class="text-gray-600" data-translate="student_card_computer_desc">Learn the basics of computers and IT skills.</p>
                 </div>
-                <div onclick="ui.navigateTo('careerGuidanceView')" class="bg-white p-6 rounded-lg shadow-md hover:shadow-xl hover:-translate-y-1 transition-all duration-300 cursor-pointer">
+                <div onclick="careerGuidance.start()" class="bg-white p-6 rounded-lg shadow-md hover:shadow-xl hover:-translate-y-1 transition-all duration-300 cursor-pointer flex flex-col items-center text-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 mb-3 text-yellow-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" /></svg>
                     <h3 class="text-xl font-bold mb-2" data-translate="student_card_career_title">Career Guidance</h3>
                     <p class="text-gray-600" data-translate="student_card_career_desc">Explore future career paths and options.</p>
                 </div>
-                 <div onclick="ui.navigateTo('profileView')" class="bg-white p-6 rounded-lg shadow-md hover:shadow-xl hover:-translate-y-1 transition-all duration-300 cursor-pointer">
+                 <div onclick="ui.navigateTo('profileView')" class="bg-white p-6 rounded-lg shadow-md hover:shadow-xl hover:-translate-y-1 transition-all duration-300 cursor-pointer flex flex-col items-center text-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 mb-3 text-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" /><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" /></svg>
                     <h3 class="text-xl font-bold mb-2" data-translate="profile_title">Profile & Settings</h3>
                     <p class="text-gray-600" data-translate="profile_desc">Manage your account and settings.</p>
                 </div>
             </div>
         </div>
 
-        <!-- ======================= TEACHER DASHBOARD VIEW ======================= -->
         <div id="teacherDashboardView" class="view">
              <div class="mb-6 bg-white p-4 rounded-lg shadow-md">
                 <h2 id="teacherWelcomeMsg" class="text-2xl font-bold text-gray-800"></h2>
@@ -114,7 +172,6 @@
                     <h3 class="text-xl font-bold mb-2" data-translate="teacher_card_test_title">Teacher Level Test</h3>
                     <p class="text-gray-600" data-translate="teacher_card_test_desc">Take a test to assess your skills and get a course.</p>
                 </div>
-                <!-- This card will appear after the test is taken -->
                 <div id="assignedCourseCard" class="bg-white p-6 rounded-lg shadow-md hover:shadow-xl hover:-translate-y-1 transition-all duration-300 cursor-pointer hidden" onclick="ui.navigateTo('teacherCourseView')">
                     <h3 class="text-xl font-bold mb-2" data-translate="teacher_assigned_course_title">Your Assigned Course</h3>
                     <p class="text-gray-600" data-translate="teacher_assigned_course_desc">Intermediate Digital Tools for Educators. Click to start.</p>
@@ -126,7 +183,6 @@
             </div>
         </div>
         
-        <!-- ======================= ADMIN DASHBOARD VIEW ======================= -->
         <div id="adminDashboardView" class="view">
              <div class="mb-6 bg-white p-4 rounded-lg shadow-md">
                 <h2 id="adminWelcomeMsg" class="text-2xl font-bold text-gray-800"></h2>
@@ -141,27 +197,22 @@
                     <h3 class="text-xl font-bold mb-2" data-translate="admin_card_feedback_title">View Feedback</h3>
                     <p class="text-gray-600 mt-2 border p-2 rounded bg-gray-50 h-32 overflow-y-auto">"The app is great, but please add more practice questions for Class 10 math." - A Student</p>
                  </div>
-                  <div onclick="ui.navigateTo('profileView')" class="bg-white p-6 rounded-lg shadow-md hover:shadow-xl hover:-translate-y-1 transition-all duration-300 cursor-pointer">
+                 <div onclick="ui.navigateTo('profileView')" class="bg-white p-6 rounded-lg shadow-md hover:shadow-xl hover:-translate-y-1 transition-all duration-300 cursor-pointer">
                     <h3 class="text-xl font-bold mb-2" data-translate="profile_title">Profile & Settings</h3>
                     <p class="text-gray-600" data-translate="profile_desc">Manage your account and settings.</p>
                 </div>
             </div>
         </div>
         
-        <!-- ======================= SUB-VIEWS (EBOOK, VIDEO, ETC) ======================= -->
-        
-        <!-- Interactive eBook Hub View -->
         <div id="ebookView" class="view">
             <button onclick="ui.backToDashboard()" class="mb-4 bg-gray-500 hover:bg-gray-600 text-white font-bold py-2 px-4 rounded">&larr; <span data-translate="back_button">Back to Dashboard</span></button>
             <div class="bg-white p-8 rounded-lg shadow-lg">
                 <h2 class="text-2xl font-bold mb-4" data-translate="ebook_main_title">eBook: Our Solar System</h2>
                 <div id="ebookChapterList" class="space-y-4">
-                    <!-- eBook chapters will be dynamically inserted here -->
-                </div>
+                    </div>
             </div>
         </div>
         
-        <!-- Interactive eBook Chapter View -->
         <div id="ebookChapterView" class="view">
             <button onclick="ui.navigateTo('ebookView')" class="mb-4 bg-gray-500 hover:bg-gray-600 text-white font-bold py-2 px-4 rounded">&larr; <span data-translate="back_to_ebook_chapters">Back to Chapters</span></button>
             <div class="bg-white p-8 rounded-lg shadow-lg">
@@ -171,18 +222,16 @@
             </div>
         </div>
 
-        <!-- Video Lecture View -->
         <div id="videoView" class="view">
              <button onclick="ui.backToDashboard()" class="mb-4 bg-gray-500 hover:bg-gray-600 text-white font-bold py-2 px-4 rounded">&larr; <span data-translate="back_button">Back to Dashboard</span></button>
              <div class="bg-white p-8 rounded-lg shadow-lg">
                 <h2 class="text-2xl font-bold mb-4" data-translate="video_title_computer">What is a Computer? - Basics</h2>
                 <div class="aspect-w-16 aspect-h-9">
-                    <iframe class="w-full h-full" src="https://www.youtube.com/embed/7_LPdttKXPc" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                    <iframe class="w-full h-full" style="aspect-ratio: 16/9;" src="https://www.youtube.com/embed/7_LPdttKXPc" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
                 </div>
             </div>
         </div>
 
-        <!-- Quiz View -->
         <div id="quizView" class="view">
             <button onclick="ui.backToDashboard()" class="mb-4 bg-gray-500 hover:bg-gray-600 text-white font-bold py-2 px-4 rounded">&larr; <span data-translate="back_button">Back to Dashboard</span></button>
             <div id="quizContainer" class="bg-white p-8 rounded-lg shadow-lg max-w-lg mx-auto">
@@ -194,7 +243,6 @@
             </div>
         </div>
 
-        <!-- Practice View -->
         <div id="practiceView" class="view">
             <button onclick="ui.backToDashboard()" class="mb-4 bg-gray-500 hover:bg-gray-600 text-white font-bold py-2 px-4 rounded">&larr; <span data-translate="back_button">Back to Dashboard</span></button>
             <div class="bg-white p-8 rounded-lg shadow-lg max-w-lg mx-auto text-center">
@@ -209,18 +257,15 @@
             </div>
         </div>
         
-        <!-- Computer Course Main View -->
         <div id="computerCourseView" class="view">
             <button onclick="ui.backToDashboard()" class="mb-4 bg-gray-500 hover:bg-gray-600 text-white font-bold py-2 px-4 rounded">&larr; <span data-translate="back_button">Back to Dashboard</span></button>
             <div class="bg-white p-8 rounded-lg shadow-lg">
                 <h2 class="text-2xl font-bold mb-4" data-translate="student_card_computer_title">Computer Fundamentals (CCC Course)</h2>
                 <div id="chapterList" class="space-y-4">
-                    <!-- Chapters will be dynamically inserted here -->
-                </div>
+                    </div>
             </div>
         </div>
         
-        <!-- Chapter Content View -->
         <div id="chapterContentView" class="view">
             <button onclick="ui.navigateTo('computerCourseView')" class="mb-4 bg-gray-500 hover:bg-gray-600 text-white font-bold py-2 px-4 rounded">&larr; <span data-translate="back_to_chapters">Back to Chapters</span></button>
             <div class="bg-white p-8 rounded-lg shadow-lg">
@@ -231,27 +276,20 @@
         </div>
 
 
-        <!-- Career Guidance View -->
         <div id="careerGuidanceView" class="view">
              <button onclick="ui.backToDashboard()" class="mb-4 bg-gray-500 hover:bg-gray-600 text-white font-bold py-2 px-4 rounded">&larr; <span data-translate="back_button">Back to Dashboard</span></button>
              <div class="bg-white p-8 rounded-lg shadow-lg">
-                <h2 class="text-2xl font-bold mb-4" data-translate="student_card_career_title">Career Guidance</h2>
-                <p class="text-gray-600 mb-6" data-translate="career_intro_desc"></p>
-                <div class="mb-4">
-                    <label for="classSelect" class="block font-bold mb-2" data-translate="career_select_class">Select Your Class:</label>
-                    <select id="classSelect" onchange="careerGuidance.showStreams()" class="w-full max-w-xs p-2 border rounded">
-                        <option value="">-- Choose --</option>
-                        <option value="10">Class 10</option>
-                        <option value="12">Class 12</option>
-                    </select>
-                </div>
-                <div id="careerStreams" class="grid grid-cols-1 md:grid-cols-3 gap-4"></div>
-                <div id="careerDetails" class="mt-6 border-t pt-6"></div>
-                <div id="careerUnsureSection" class="mt-8 border-t pt-6"></div>
+                <h2 class="text-3xl font-bold mb-2" data-translate="student_card_career_title">Career Guidance</h2>
+                <p id="careerStepIndicator" class="text-gray-500 mb-6"></p>
+
+                <div id="careerWizardContainer">
+                    </div>
+
+                <button id="careerBackButton" onclick="careerGuidance.goBack()" class="mt-6 bg-gray-200 hover:bg-gray-300 text-gray-800 font-bold py-2 px-4 rounded hidden">&larr; <span data-translate="career_back_button">Back</span></button>
+
              </div>
         </div>
         
-        <!-- Teacher Test View -->
         <div id="teacherTestView" class="view">
              <button onclick="ui.backToDashboard()" class="mb-4 bg-gray-500 hover:bg-gray-600 text-white font-bold py-2 px-4 rounded">&larr; <span data-translate="back_button">Back to Dashboard</span></button>
              <div class="bg-white p-8 rounded-lg shadow-lg">
@@ -262,17 +300,15 @@
              </div>
         </div>
 
-        <!-- ======================= TEACHER COURSE VIEW ======================= -->
         <div id="teacherCourseView" class="view">
             <button onclick="ui.backToDashboard()" class="mb-4 bg-gray-500 hover:bg-gray-600 text-white font-bold py-2 px-4 rounded">&larr; <span data-translate="back_button">Back to Dashboard</span></button>
             <div class="bg-white p-8 rounded-lg shadow-lg">
                 <h2 class="text-3xl font-bold mb-4" data-translate="teacher_course_title">Intermediate Digital Tools</h2>
-                <div class="prose max-w-none text-gray-700 leading-relaxed" data-translate="teacher_course_content">
-                </div>
+                <div class="prose max-w-none text-gray-700 leading-relaxed" id="teacherCourseContent">
+                    </div>
             </div>
         </div>
 
-        <!-- Profile & Settings View -->
         <div id="profileView" class="view">
             <button onclick="ui.backToDashboard()" class="mb-4 bg-gray-500 hover:bg-gray-600 text-white font-bold py-2 px-4 rounded">&larr; <span data-translate="back_button">Back to Dashboard</span></button>
             <div class="bg-white p-8 rounded-lg shadow-lg max-w-lg mx-auto">
@@ -315,6 +351,8 @@
         const translations = {
             en: {
                 app_title: "Shiksha Setu", login_heading: "Login", role_student: "Student", role_teacher: "Teacher", role_admin: "Admin", login_button: "Login", logout_button: "Logout",
+                signup_heading: "Create Account", signup_button: "Sign Up", confirm_password_placeholder: "Confirm Password", prompt_signup: "Don't have an account?", signup_link: "Sign Up", prompt_login: "Already have an account?", login_link: "Login",
+                signup_success: "Account created successfully! Please log in.", error_all_fields: "Please fill in all fields.", error_password_mismatch: "Passwords do not match.", error_user_exists: "Username already exists. Please choose another one.", error_invalid_credentials: "Invalid username or password.",
                 welcome_message: "Welcome, {username}", welcome_role_message: "({role})", streak_message: "Login Streak: {streak} days",
                 student_card_ebook_title: "Interactive eBook", student_card_ebook_desc: "Read chapters, take notes, and learn interactively.",
                 student_card_video_title: "Animated Lectures", student_card_video_desc: "Watch short, engaging animated videos.",
@@ -335,16 +373,37 @@
                 teacher_course_content: "<p>This course is designed for teachers who have a basic understanding of computers but want to learn about modern digital tools for the classroom.</p><h3 class='font-bold mt-4'>Module 1: Using Google Classroom</h3><p>Learn how to set up your class, create assignments, grade submissions, and communicate with students effectively using Google Classroom.</p><h3 class='font-bold mt-4'>Module 2: Creating Interactive Presentations</h3><p>Explore tools like Canva and Google Slides to create visually engaging presentations that capture student interest. Learn about embedding videos, creating animations, and using interactive Q&A features.</p>",
                 admin_card_notification_title: "Send Notifications", send_button: "Send", admin_card_feedback_title: "View Feedback",
                 profile_title: "Profile & Settings", profile_desc: "Manage your account and settings.", profile_username: "Username", profile_role: "Role", profile_change_password: "Change Password", profile_notifications: "Email Notifications",
-                career_select_class: "Select Your Class:", career_intro_desc: "After you pass Class 10, you have to choose a 'stream' or a group of subjects for your further studies. This choice helps decide what kind of jobs you can do in the future. Let's explore the main options!",
-                career_unsure_title: "🤔 What if I'm not sure?",
-                career_unsure_content: "It's completely okay to be unsure! Many students are. Here are some tips:<br>1. <b>Think about your favorite subject:</b> Which class do you enjoy the most? This can be a good clue.<br>2. <b>Talk to your teachers:</b> Your teachers know you well and can give you great advice.<br>3. <b>Don't worry about what friends are choosing:</b> Pick what is best for YOU.",
-                back_to_chapters: "Back to Chapters", take_chapter_quiz: "Take Chapter Quiz"
+                back_to_chapters: "Back to Chapters", take_chapter_quiz: "Take Chapter Quiz",
+                career_back_button: "Back",
+                career_step_1_title: "Step 1 of 4: Select Your Class", career_step_2_title: "Step 2 of 4: Choose a Stream", career_step_3_title: "Step 3 of 4: Pick a Subject Focus", career_step_4_title: "Step 4 of 4: Recommended Paths",
+                class_10_title: "Class 10th", class_12_title: "Class 12th",
+                stream_science_title: "Science", stream_commerce_title: "Commerce", stream_arts_title: "Arts / Humanities", stream_vocational_title: "Vocational",
+                subject_medical_title: "Medical (Biology)", subject_engineering_title: "Engineering (Maths)", subject_ca_title: "Chartered Accountant (CA)", subject_business_title: "Business / Management", subject_gov_title: "Government Exams", subject_journalism_title: "Journalism / Writing", subject_iti_title: "ITI / Technical Skills", subject_computer_title: "Computer Basics",
+                results_medical_title: "Paths for Medical (Biology)", results_engineering_title: "Paths for Engineering (Maths)", results_ca_title: "Paths for Chartered Accountant", results_business_title: "Paths for Business / Management", results_gov_title: "Paths for Government Exams", results_journalism_title: "Paths for Journalism / Writing", results_iti_title: "Paths for ITI / Technical Skills", results_computer_title: "Paths for Computer Basics",
+                exam_neet_name: "NEET (National Eligibility cum Entrance Test)", exam_neet_desc: "For admission to MBBS, BDS, and other undergraduate medical courses.",
+                exam_nursing_name: "B.Sc. Nursing", exam_nursing_desc: "For a career in the healthcare sector as a nurse.",
+                exam_jee_name: "JEE (Joint Entrance Examination)", exam_jee_desc: "For admission to Engineering colleges like IITs and NITs.",
+                exam_nda_name: "NDA (National Defence Academy)", exam_nda_desc: "To join the Army, Navy, or Air Force as an officer.",
+                exam_ca_foundation_name: "CA Foundation", exam_ca_foundation_desc: "The first step to becoming a Chartered Accountant.",
+                exam_bcom_name: "B.Com (Bachelor of Commerce)", exam_bcom_desc: "A foundational degree for careers in finance and accounting.",
+                exam_clat_name: "CLAT (Common Law Admission Test)", exam_clat_desc: "For admission to National Law Universities.",
+                exam_bba_name: "BBA (Bachelor of Business Administration)", exam_bba_desc: "A degree focused on business management and administration.",
+                exam_upsc_name: "UPSC Civil Services", exam_upsc_desc: "For recruitment to high-level government posts like IAS, IPS.",
+                exam_ssc_name: "SSC (Staff Selection Commission)", exam_ssc_desc: "For various government jobs at different levels.",
+                exam_bjmc_name: "BJMC (Bachelor of Journalism & Mass Communication)", exam_bjmc_desc: "A degree for careers in media, reporting, and public relations.",
+                exam_ba_eng_name: "BA English Literature", exam_ba_eng_desc: "For careers in writing, editing, and academia.",
+                exam_iti_name: "ITI Certificate Courses", exam_iti_desc: "For technical jobs like electrician, welder, fitter, etc.",
+                exam_polytechnic_name: "Polytechnic Diploma", exam_polytechnic_desc: "Diploma courses in various engineering and technical fields.",
+                exam_ccc_name: "CCC (Course on Computer Concepts)", exam_ccc_desc: "A basic IT literacy course, often required for government jobs.",
+                exam_dca_name: "DCA (Diploma in Computer Applications)", exam_dca_desc: "A comprehensive diploma covering various computer applications.",
             },
             hi: {
                 app_title: "शिक्षा सेतु", login_heading: "लॉगिन", role_student: "विद्यार्थी", role_teacher: "शिक्षक", role_admin: "एडमिन", login_button: "लॉगिन करें", logout_button: "लॉगआउट",
+                signup_heading: "अकाउंट बनाएं", signup_button: "साइन अप करें", confirm_password_placeholder: "पासवर्ड की पुष्टि करें", prompt_signup: "अकाउंट नहीं है?", signup_link: "साइन अप करें", prompt_login: "पहले से ही एक खाता मौजूद है?", login_link: "लॉगिन करें",
+                signup_success: "अकाउंट सफलतापूर्वक बन गया! कृपया लॉगिन करें।", error_all_fields: "कृपया सभी फ़ील्ड भरें।", error_password_mismatch: "पासवर्ड मेल नहीं खाते।", error_user_exists: "यह उपयोगकर्ता नाम पहले से मौजूद है। कृपया दूसरा चुनें।", error_invalid_credentials: "अमान्य उपयोगकर्ता नाम या पासवर्ड।",
                 welcome_message: "स्वागत है, {username}", welcome_role_message: "({role})", streak_message: "लॉगिन स्ट्रीक: {streak} दिन",
                 student_card_ebook_title: "इंटरैक्टिव ईबुक", student_card_ebook_desc: "अध्याय पढ़ें, नोट्स लें और अंतःक्रियात्मक रूप से सीखें।",
-                student_card_video_title: "एनिमेटेड व्याख्यान", student_card_video_desc: "छोटे, आकर्षक एनिमेटed वीडियो देखें।",
+                student_card_video_title: "एनिमेटेड व्याख्यान", student_card_video_desc: "छोटे, आकर्षक एनिमेटेड वीडियो देखें।",
                 student_card_quiz_title: "प्रश्नोत्तरी", student_card_quiz_desc: "हर पाठ के बाद अपने ज्ञान का परीक्षण करें।",
                 student_card_practice_title: "अभ्यास", student_card_practice_desc: "अवधारणाओं में महारत हासिल करने के लिए अतिरिक्त समस्याओं का समाधान करें।",
                 student_card_computer_title: "कंप्यूटर की मूल बातें", student_card_computer_desc: "कंप्यूटर और आईटी कौशल की मूल बातें जानें।",
@@ -362,13 +421,34 @@
                 teacher_course_content: "<p>यह पाठ्यक्रम उन शिक्षकों के लिए डिज़ाइन किया गया है जिनके पास कंप्यूटर की बुनियादी समझ है, लेकिन वे कक्षा के लिए आधुनिक डिजिटल टूल के बारे में जानना चाहते हैं।</p><h3 class='font-bold mt-4'>मॉड्यूल 1: गूगल क्लासरूम का उपयोग करना</h3><p>जानें कि अपनी कक्षा कैसे सेट करें, असाइनमेंट बनाएं, सबमिशन ग्रेड करें और गूगल क्लासरूम का उपयोग करके छात्रों के साथ प्रभावी ढंग से संवाद करें।</p><h3 class='font-bold mt-4'>मॉड्यूल 2: इंटरैक्टिव प्रस्तुतियाँ बनाना</h3><p>दृश्यात्मक रूप से आकर्षक प्रस्तुतियाँ बनाने के लिए कैनवा और गूगल स्लाइड्स जैसे टूल का अन्वेषण करें जो छात्रों की रुचि को आकर्षित करते हैं। वीडियो एम्बेड करने, एनिमेशन बनाने और इंटरैक्टिव प्रश्नोत्तर सुविधाओं का उपयोग करने के बारे में जानें।</p>",
                 admin_card_notification_title: "सूचनाएं भेजें", send_button: "भेजें", admin_card_feedback_title: "प्रतिक्रिया देखें",
                 profile_title: "प्रोफ़ाइल और सेटिंग्स", profile_desc: "अपना खाता और सेटिंग्स प्रबंधित करें।", profile_username: "उपयोगकर्ता नाम", profile_role: "भूमिका", profile_change_password: "पासवर्ड बदलें", profile_notifications: "ईमेल सूचनाएं",
-                career_select_class: "अपनी कक्षा चुनें:", career_intro_desc: "कक्षा 10 पास करने के बाद, आपको अपनी आगे की पढ़ाई के लिए एक 'स्ट्रीम' या विषयों का समूह चुनना होगा। यह चुनाव यह तय करने में मदद करता है कि आप भविष्य में किस तरह की नौकरियां कर सकते हैं। आइए मुख्य विकल्पों का पता लगाएं!",
-                career_unsure_title: "🤔 क्या होगा अगर मुझे यकीन नहीं है?",
-                career_unsure_content: "अनिश्चित होना पूरी तरह से ठीक है! बहुत सारे छात्र हैं। यहाँ कुछ युक्तियाँ हैं:<br>1. <b>अपने पसंदीदा विषय के बारे में सोचें:</b> आपको कौन सी कक्षा सबसे ज्यादा पसंद है? यह एक अच्छा सुराग हो सकता है।<br>2. <b>अपने शिक्षकों से बात करें:</b> आपके शिक्षक आपको अच्छी तरह से जानते हैं और आपको अच्छी सलाह दे सकते हैं।<br>3. <b>दोस्त क्या चुन रहे हैं, इसकी चिंता न करें:</b> वही चुनें जो आपके लिए सबसे अच्छा हो।",
-                back_to_chapters: "अध्यायों पर वापस जाएं", take_chapter_quiz: "अध्याय प्रश्नोत्तरी लें"
+                back_to_chapters: "अध्यायों पर वापस जाएं", take_chapter_quiz: "अध्याय प्रश्नोत्तरी लें",
+                career_back_button: "वापस",
+                career_step_1_title: "चरण 1/4: अपनी कक्षा चुनें", career_step_2_title: "चरण 2/4: एक स्ट्रीम चुनें", career_step_3_title: "चरण 3/4: एक विषय चुनें", career_step_4_title: "चरण 4/4: सुझाए गए रास्ते",
+                class_10_title: "कक्षा 10वीं", class_12_title: "कक्षा 12वीं",
+                stream_science_title: "विज्ञान", stream_commerce_title: "कॉमर्स", stream_arts_title: "कला / मानविकी", stream_vocational_title: "व्यावसायिक",
+                subject_medical_title: "मेडिकल (जीव विज्ञान)", subject_engineering_title: "इंजीनियरिंग (गणित)", subject_ca_title: "चार्टर्ड अकाउंटेंट (सीए)", subject_business_title: "व्यापार / प्रबंधन", subject_gov_title: "सरकारी परीक्षा", subject_journalism_title: "पत्रकारिता / लेखन", subject_iti_title: "आईटीआई / तकनीकी कौशल", subject_computer_title: "कंप्यूटर की मूल बातें",
+                results_medical_title: "मेडिकल (जीव विज्ञान) के लिए रास्ते", results_engineering_title: "इंजीनियरिंग (गणित) के लिए रास्ते", results_ca_title: "चार्टर्ड अकाउंटेंट के लिए रास्ते", results_business_title: "व्यापार / प्रबंधन के लिए रास्ते", results_gov_title: "सरकारी परीक्षा के लिए रास्ते", results_journalism_title: "पत्रकारिता / लेखन के लिए रास्ते", results_iti_title: "आईटीआई / तकनीकी कौशल के लिए रास्ते", results_computer_title: "कंप्यूटर की मूल बातें के लिए रास्ते",
+                exam_neet_name: "नीट (राष्ट्रीय पात्रता सह प्रवेश परीक्षा)", exam_neet_desc: "एमबीबीएस, बीडीएस और अन्य स्नातक चिकित्सा पाठ्यक्रमों में प्रवेश के लिए।",
+                exam_nursing_name: "बीएससी नर्सिंग", exam_nursing_desc: "नर्स के रूप में स्वास्थ्य सेवा क्षेत्र में करियर के लिए।",
+                exam_jee_name: "जेईई (संयुक्त प्रवेश परीक्षा)", exam_jee_desc: "आईआईटी और एनआईटी जैसे इंजीनियरिंग कॉलेजों में प्रवेश के लिए।",
+                exam_nda_name: "एनडीए (राष्ट्रीय रक्षा अकादमी)", exam_nda_desc: "सेना, नौसेना या वायु सेना में एक अधिकारी के रूप में शामिल होने के लिए।",
+                exam_ca_foundation_name: "सीए फाउंडेशन", exam_ca_foundation_desc: "चार्टर्ड अकाउंटेंट बनने का पहला कदम।",
+                exam_bcom_name: "बी.कॉम (वाणिज्य स्नातक)", exam_bcom_desc: "वित्त और लेखा में करियर के लिए एक मूलभूत डिग्री।",
+                exam_clat_name: "क्लैट (कॉमन लॉ एडमिशन टेस्ट)", exam_clat_desc: "राष्ट्रीय विधि विश्वविद्यालयों में प्रवेश के लिए।",
+                exam_bba_name: "बीबीए (बैचलर ऑफ बिजनेस एडमिनिस्ट्रेशन)", exam_bba_desc: "व्यावसायिक प्रबंधन और प्रशासन पर केंद्रित एक डिग्री।",
+                exam_upsc_name: "यूपीएससी सिविल सेवा", exam_upsc_desc: "आईएएस, आईपीएस जैसे उच्च स्तरीय सरकारी पदों पर भर्ती के लिए।",
+                exam_ssc_name: "एसएससी (कर्मचारी चयन आयोग)", exam_ssc_desc: "विभिन्न स्तरों पर विभिन्न सरकारी नौकरियों के लिए।",
+                exam_bjmc_name: "बीजेएमसी (पत्रकारिता और जनसंचार में स्नातक)", exam_bjmc_desc: "मीडिया, रिपोर्टिंग और जनसंपर्क में करियर के लिए एक डिग्री।",
+                exam_ba_eng_name: "बीए अंग्रेजी साहित्य", exam_ba_eng_desc: "लेखन, संपादन और शिक्षा के क्षेत्र में करियर के लिए।",
+                exam_iti_name: "आईटीआई सर्टिफिकेट कोर्स", exam_iti_desc: "इलेक्ट्रीशियन, वेल्डर, फिटर आदि जैसे तकनीकी कार्यों के लिए।",
+                exam_polytechnic_name: "पॉलिटेक्निक डिप्लोमा", exam_polytechnic_desc: "विभिन्न इंजीनियरिंग और तकनीकी क्षेत्रों में डिप्लोमा पाठ्यक्रम।",
+                exam_ccc_name: "सीसीसी (कंप्यूटर अवधारणाओं पर पाठ्यक्रम)", exam_ccc_desc: "एक बुनियादी आईटी साक्षरता पाठ्यक्रम, जो अक्सर सरकारी नौकरियों के लिए आवश्यक होता है।",
+                exam_dca_name: "डीसीए (कंप्यूटर एप्लीकेशन में डिप्लोमा)", exam_dca_desc: "विभिन्न कंप्यूटर अनुप्रयोगों को कवर करने वाला एक व्यापक डिप्लोमा।",
             },
             pa: {
                 app_title: "ਸਿੱਖਿਆ ਸੇਤੁ", login_heading: "ਲਾਗਇਨ", role_student: "ਵਿਦਿਆਰਥੀ", role_teacher: "ਅਧਿਆਪਕ", role_admin: "ਐਡਮਿਨ", login_button: "ਲਾਗਇਨ ਕਰੋ", logout_button: "ਲਾਗਆਉਟ",
+                signup_heading: "ਖਾਤਾ ਬਣਾਓ", signup_button: "ਸਾਈਨ ਅੱਪ ਕਰੋ", confirm_password_placeholder: "ਪਾਸਵਰਡ ਦੀ ਪੁਸ਼ਟੀ ਕਰੋ", prompt_signup: "ਕੀ ਤੁਹਾਡਾ ਖਾਤਾ ਨਹੀਂ ਹੈ?", signup_link: "ਸਾਈਨ ਅੱਪ ਕਰੋ", prompt_login: "ਪਹਿਲਾਂ ਤੋਂ ਹੀ ਖਾਤਾ ਹੈ?", login_link: "ਲਾਗਇਨ ਕਰੋ",
+                signup_success: "ਖਾਤਾ ਸਫਲਤਾਪੂਰਵਕ ਬਣਾਇਆ ਗਿਆ! ਕਿਰਪਾ ਕਰਕੇ ਲੌਗਇਨ ਕਰੋ।", error_all_fields: "ਕਿਰਪਾ ਕਰਕੇ ਸਾਰੇ ਖੇਤਰ ਭਰੋ।", error_password_mismatch: "ਪਾਸਵਰਡ ਮੇਲ ਨਹੀਂ ਖਾਂਦੇ।", error_user_exists: "ਯੂਜ਼ਰਨਾਮ ਪਹਿਲਾਂ ਤੋਂ ਮੌਜੂਦ ਹੈ। ਕਿਰਪਾ ਕਰਕੇ ਕੋਈ ਹੋਰ ਚੁਣੋ।", error_invalid_credentials: "ਅਵੈਧ ਯੂਜ਼ਰਨਾਮ ਜਾਂ ਪਾਸਵਰਡ।",
                 welcome_message: "ਜੀ ਆਇਆਂ ਨੂੰ, {username}", welcome_role_message: "({role})", streak_message: "ਲੌਗਇਨ ਸਟ੍ਰੀਕ: {streak} ਦਿਨ",
                 student_card_ebook_title: "ਇੰਟਰਐਕਟਿਵ ਈ-ਬੁੱਕ", student_card_ebook_desc: "ਅਧਿਆਇ ਪੜ੍ਹੋ, ਨੋਟਸ ਲਓ, ਅਤੇ ਇੰਟਰਐਕਟਿਵ ਤਰੀਕੇ ਨਾਲ ਸਿੱਖੋ।",
                 student_card_video_title: "ਐਨੀਮੇਟਡ ਲੈਕਚਰ", student_card_video_desc: "ਛੋਟੇ, ਦਿਲਚਸਪ ਐਨੀਮੇਟਡ ਵੀਡੀਓ ਦੇਖੋ।",
@@ -389,10 +469,29 @@
                 teacher_course_content: "<p>ਇਹ ਕੋਰਸ ਉਹਨਾਂ ਅਧਿਆਪਕਾਂ ਲਈ ਤਿਆਰ ਕੀਤਾ ਗਿਆ ਹੈ ਜਿਨ੍ਹਾਂ ਨੂੰ ਕੰਪਿਊਟਰ ਦੀ ਮੁੱਢਲੀ ਸਮਝ ਹੈ ਪਰ ਉਹ ਕਲਾਸਰੂਮ ਲਈ ਆਧੁਨਿਕ ਡਿਜੀਟਲ ਸਾਧਨਾਂ ਬਾਰੇ ਸਿੱਖਣਾ ਚਾਹੁੰਦੇ ਹਨ।</p><h3 class='font-bold mt-4'>ਮੌਡਿਊਲ 1: ਗੂਗਲ ਕਲਾਸਰੂਮ ਦੀ ਵਰਤੋਂ ਕਰਨਾ</h3><p>ਸਿੱਖੋ ਕਿ ਆਪਣੀ ਕਲਾਸ ਕਿਵੇਂ ਸਥਾਪਤ ਕਰਨੀ ਹੈ, ਅਸਾਈਨਮੈਂਟ ਬਣਾਉਣੇ ਹਨ, ਸਬਮਿਸ਼ਨਾਂ ਨੂੰ ਗ੍ਰੇਡ ਕਰਨਾ ਹੈ, ਅਤੇ ਗੂਗਲ ਕਲਾਸਰੂਮ ਦੀ ਵਰਤੋਂ ਕਰਕੇ ਵਿਦਿਆਰਥੀਆਂ ਨਾਲ ਪ੍ਰਭਾਵਸ਼ਾਲੀ ਢੰਗ ਨਾਲ ਸੰਚਾਰ ਕਰਨਾ ਹੈ।</p><h3 class='font-bold mt-4'>ਮੌਡਿਊਲ 2: ਇੰਟਰਐਕਟਿਵ ਪੇਸ਼ਕਾਰੀਆਂ ਬਣਾਉਣਾ</h3><p>ਦ੍ਰਿਸ਼ਟੀਗਤ ਤੌਰ 'ਤੇ ਦਿਲਚਸਪ ਪੇਸ਼ਕਾਰੀਆਂ ਬਣਾਉਣ ਲਈ ਕੈਨਵਾ ਅਤੇ ਗੂਗਲ ਸਲਾਈਡਾਂ ਵਰਗੇ ਸਾਧਨਾਂ ਦੀ ਪੜਚੋਲ ਕਰੋ ਜੋ ਵਿਦਿਆਰਥੀਆਂ ਦੀ ਦਿਲਚਸਪੀ ਨੂੰ ਹਾਸਲ ਕਰਦੇ ਹਨ। ਵੀਡੀਓਜ਼ ਨੂੰ ਏਮਬੈੱਡ ਕਰਨ, ਐਨੀਮੇਸ਼ਨ ਬਣਾਉਣ, ਅਤੇ ਇੰਟਰਐਕਟਿਵ ਸਵਾਲ-ਜਵਾਬ ਵਿਸ਼ੇਸ਼ਤਾਵਾਂ ਦੀ ਵਰਤੋਂ ਕਰਨ ਬਾਰੇ ਸਿੱਖੋ।</p>",
                 admin_card_notification_title: "ਸੂਚਨਾਵਾਂ ਭੇਜੋ", send_button: "ਭੇਜੋ", admin_card_feedback_title: "ਫੀਡਬੈਕ ਵੇਖੋ",
                 profile_title: "ਪ੍ਰੋਫਾਈਲ ਅਤੇ ਸੈਟਿੰਗਾਂ", profile_desc: "ਆਪਣੇ ਖਾਤੇ ਅਤੇ ਸੈਟਿੰਗਾਂ ਦਾ ਪ੍ਰਬੰਧਨ ਕਰੋ।", profile_username: "ਉਪਭੋਗਤਾ ਨਾਮ", profile_role: "ਭੂਮਿਕਾ", profile_change_password: "ਪਾਸਵਰਡ ਬਦਲੋ", profile_notifications: "ਈਮੇਲ ਸੂਚਨਾਵਾਂ",
-                career_select_class: "ਆਪਣੀ ਕਲਾਸ ਚੁਣੋ:", career_intro_desc: "ਜਦੋਂ ਤੁਸੀਂ 10ਵੀਂ ਜਮਾਤ ਪਾਸ ਕਰਦੇ ਹੋ, ਤਾਂ ਤੁਹਾਨੂੰ ਆਪਣੀ ਅਗਲੀ ਪੜ੍ਹਾਈ ਲਈ ਇੱਕ 'ਸਟ੍ਰੀਮ' ਜਾਂ ਵਿਸ਼ਿਆਂ ਦਾ ਸਮੂਹ ਚੁਣਨਾ ਪੈਂਦਾ ਹੈ। ਇਹ ਚੋਣ ਇਹ ਫੈਸਲਾ ਕਰਨ ਵਿੱਚ ਮਦਦ ਕਰਦੀ ਹੈ ਕਿ ਤੁਸੀਂ ਭਵਿੱਖ ਵਿੱਚ ਕਿਸ ਕਿਸਮ ਦੀਆਂ ਨੌਕਰੀਆਂ ਕਰ ਸਕਦੇ ਹੋ। ਆਓ ਮੁੱਖ ਵਿਕਲਪਾਂ ਦੀ ਪੜਚੋਲ ਕਰੀਏ!",
-                career_unsure_title: "🤔 ਜੇ ਮੈਨੂੰ ਯਕੀਨ ਨਹੀਂ ਹੈ ਤਾਂ ਕੀ ਹੋਵੇਗਾ?",
-                career_unsure_content: "ਯਕੀਨੀ ਨਾ ਹੋਣਾ ਪੂਰੀ ਤਰ੍ਹਾਂ ਠੀਕ ਹੈ! ਬਹੁਤ ਸਾਰੇ ਵਿਦਿਆਰਥੀ ਹਨ। ਇੱਥੇ ਕੁਝ ਸੁਝਾਅ ਹਨ:<br>1. <b>ਆਪਣੇ ਮਨਪਸੰਦ ਵਿਸ਼ੇ ਬਾਰੇ ਸੋਚੋ:</b> ਤੁਹਾਨੂੰ ਕਿਹੜੀ ਕਲਾਸ ਸਭ ਤੋਂ ਵੱਧ ਪਸੰਦ ਹੈ? ਇਹ ਇੱਕ ਚੰਗਾ ਸੁਰਾਗ ਹੋ ਸਕਦਾ ਹੈ।<br>2. <b>ਆਪਣੇ ਅਧਿਆਪਕਾਂ ਨਾਲ ਗੱਲ ਕਰੋ:</b> ਤੁਹਾਡੇ ਅਧਿਆਪਕ ਤੁਹਾਨੂੰ ਚੰਗੀ ਤਰ੍ਹਾਂ ਜਾਣਦੇ ਹਨ ਅਤੇ ਤੁਹਾਨੂੰ ਵਧੀਆ ਸਲਾਹ ਦੇ ਸਕਦੇ ਹਨ।<br>3. <b>ਦੋਸਤ ਕੀ ਚੁਣ ਰਹੇ ਹਨ ਇਸ ਬਾਰੇ ਚਿੰਤਾ ਨਾ ਕਰੋ:</b> ਉਹ ਚੁਣੋ ਜੋ ਤੁਹਾਡੇ ਲਈ ਸਭ ਤੋਂ ਵਧੀਆ ਹੈ।",
-                back_to_chapters: "ਅਧਿਆਇ 'ਤੇ ਵਾਪਸ ਜਾਓ", take_chapter_quiz: "ਅਧਿਆਇ ਕਵਿਜ਼ ਲਵੋ"
+                back_to_chapters: "ਅਧਿਆਇ 'ਤੇ ਵਾਪਸ ਜਾਓ", take_chapter_quiz: "ਅਧਿਆਇ ਕਵਿਜ਼ ਲਵੋ",
+                career_back_button: "ਪਿੱਛੇ",
+                career_step_1_title: "ਕਦਮ 1/4: ਆਪਣੀ ਜਮਾਤ ਚੁਣੋ", career_step_2_title: "ਕਦਮ 2/4: ਇੱਕ ਸਟ੍ਰੀਮ ਚੁਣੋ", career_step_3_title: "ਕਦਮ 3/4: ਇੱਕ ਵਿਸ਼ਾ ਚੁਣੋ", career_step_4_title: "ਕਦਮ 4/4: ਸਿਫ਼ਾਰਸ਼ ਕੀਤੇ ਰਸਤੇ",
+                class_10_title: "10ਵੀਂ ਜਮਾਤ", class_12_title: "12ਵੀਂ ਜਮਾਤ",
+                stream_science_title: "ਵਿਗਿਆਨ", stream_commerce_title: "ਕਾਮਰਸ", stream_arts_title: "ਕਲਾ / ਮਾਨਵਤਾ", stream_vocational_title: "ਵੋਕੇਸ਼ਨਲ",
+                subject_medical_title: "ਮੈਡੀਕਲ (ਜੀਵ ਵਿਗਿਆਨ)", subject_engineering_title: "ਇੰਜੀਨੀਅਰਿੰਗ (ਗਣਿਤ)", subject_ca_title: "ਚਾਰਟਰਡ ਅਕਾਊਂਟੈਂਟ (ਸੀ.ਏ.)", subject_business_title: "ਵਪਾਰ / ਪ੍ਰਬੰਧਨ", subject_gov_title: "ਸਰਕਾਰੀ ਪ੍ਰੀਖਿਆਵਾਂ", subject_journalism_title: "ਪੱਤਰਕਾਰੀ / ਲੇਖਣੀ", subject_iti_title: "ITI / ਤਕਨੀਕੀ ਹੁਨਰ", subject_computer_title: "ਕੰਪਿਊਟਰ ਬੇਸਿਕਸ",
+                results_medical_title: "ਮੈਡੀਕਲ (ਜੀਵ ਵਿਗਿਆਨ) ਲਈ ਰਸਤੇ", results_engineering_title: "ਇੰਜੀਨੀਅਰਿੰਗ (ਗਣਿਤ) ਲਈ ਰਸਤੇ", results_ca_title: "ਚਾਰਟਰਡ ਅਕਾਊਂਟੈਂਟ ਲਈ ਰਸਤੇ", results_business_title: "ਵਪਾਰ / ਪ੍ਰਬੰਧਨ ਲਈ ਰਸਤੇ", results_gov_title: "ਸਰਕਾਰੀ ਪ੍ਰੀਖਿਆਵਾਂ ਲਈ ਰਸਤੇ", results_journalism_title: "ਪੱਤਰਕਾਰੀ / ਲੇਖਣੀ ਲਈ ਰਸਤੇ", results_iti_title: "ITI / ਤਕਨੀਕੀ ਹੁਨਰ ਲਈ ਰਸਤੇ", results_computer_title: "ਕੰਪਿਊਟਰ ਬੇਸਿਕਸ ਲਈ ਰਸਤੇ",
+                exam_neet_name: "ਨੀਟ (ਰਾਸ਼ਟਰੀ ਯੋਗਤਾ ਕਮ ਦਾਖਲਾ ਪ੍ਰੀਖਿਆ)", exam_neet_desc: "MBBS, BDS, ਅਤੇ ਹੋਰ ਅੰਡਰਗਰੈਜੂਏਟ ਮੈਡੀਕਲ ਕੋਰਸਾਂ ਵਿੱਚ ਦਾਖਲੇ ਲਈ।",
+                exam_nursing_name: "ਬੀ.ਐਸ.ਸੀ. ਨਰਸਿੰਗ", exam_nursing_desc: "ਇੱਕ ਨਰਸ ਵਜੋਂ ਸਿਹਤ ਸੰਭਾਲ ਖੇਤਰ ਵਿੱਚ ਕਰੀਅਰ ਲਈ।",
+                exam_jee_name: "ਜੇ.ਈ.ਈ. (ਸੰਯੁਕਤ ਦਾਖਲਾ ਪ੍ਰੀਖਿਆ)", exam_jee_desc: "ਆਈ.ਆਈ.ਟੀ. ਅਤੇ ਐਨ.ਆਈ.ਟੀ. ਵਰਗੇ ਇੰਜੀਨੀਅਰਿੰਗ ਕਾਲਜਾਂ ਵਿੱਚ ਦਾਖਲੇ ਲਈ।",
+                exam_nda_name: "ਐਨ.ਡੀ.ਏ. (ਰਾਸ਼ਟਰੀ ਰੱਖਿਆ ਅਕੈਡਮੀ)", exam_nda_desc: "ਇੱਕ ਅਧਿਕਾਰੀ ਵਜੋਂ ਫੌਜ, ਜਲ ਸੈਨਾ, ਜਾਂ ਹਵਾਈ ਸੈਨਾ ਵਿੱਚ ਸ਼ਾਮਲ ਹੋਣ ਲਈ।",
+                exam_ca_foundation_name: "ਸੀ.ਏ. ਫਾਊਂਡੇਸ਼ਨ", exam_ca_foundation_desc: "ਇੱਕ ਚਾਰਟਰਡ ਅਕਾਊਂਟੈਂਟ ਬਣਨ ਦਾ ਪਹਿਲਾ ਕਦਮ।",
+                exam_bcom_name: "ਬੀ.ਕਾਮ (ਬੈਚਲਰ ਆਫ਼ ਕਾਮਰਸ)", exam_bcom_desc: "ਵਿੱਤ ਅਤੇ ਲੇਖਾਕਾਰੀ ਵਿੱਚ ਕਰੀਅਰ ਲਈ ਇੱਕ ਬੁਨਿਆਦੀ ਡਿਗਰੀ।",
+                exam_clat_name: "ਕਲੈਟ (ਕਾਮਨ ਲਾਅ ਐਡਮਿਸ਼ਨ ਟੈਸਟ)", exam_clat_desc: "ਰਾਸ਼ਟਰੀ ਕਾਨੂੰਨ ਯੂਨੀਵਰਸਿਟੀਆਂ ਵਿੱਚ ਦਾਖਲੇ ਲਈ।",
+                exam_bba_name: "ਬੀ.ਬੀ.ਏ (ਬੈਚਲਰ ਆਫ਼ ਬਿਜ਼ਨਸ ਐਡਮਿਨਿਸਟ੍ਰੇਸ਼ਨ)", exam_bba_desc: "ਵਪਾਰ ਪ੍ਰਬੰਧਨ ਅਤੇ ਪ੍ਰਸ਼ਾਸਨ 'ਤੇ ਕੇਂਦ੍ਰਿਤ ਇੱਕ ਡਿਗਰੀ।",
+                exam_upsc_name: "ਯੂ.ਪੀ.ਐਸ.ਸੀ. ਸਿਵਲ ਸੇਵਾਵਾਂ", exam_upsc_desc: "ਆਈ.ਏ.ਐਸ., ਆਈ.ਪੀ.ਐਸ. ਵਰਗੀਆਂ ਉੱਚ-ਪੱਧਰੀ ਸਰਕਾਰੀ ਅਸਾਮੀਆਂ 'ਤੇ ਭਰਤੀ ਲਈ।",
+                exam_ssc_name: "ਐਸ.ਐਸ.ਸੀ. (ਸਟਾਫ ਸਿਲੈਕਸ਼ਨ ਕਮਿਸ਼ਨ)", exam_ssc_desc: "ਵੱਖ-ਵੱਖ ਪੱਧਰਾਂ 'ਤੇ ਵੱਖ-ਵੱਖ ਸਰਕਾਰੀ ਨੌਕਰੀਆਂ ਲਈ।",
+                exam_bjmc_name: "ਬੀ.ਜੇ.ਐਮ.ਸੀ. (ਬੈਚਲਰ ਆਫ਼ ਜਰਨਲਿਜ਼ਮ ਅਤੇ ਮਾਸ ਕਮਿਊਨੀਕੇਸ਼ਨ)", exam_bjmc_desc: "ਮੀਡੀਆ, ਰਿਪੋਰਟਿੰਗ ਅਤੇ ਜਨਤਕ ਸੰਬੰਧਾਂ ਵਿੱਚ ਕਰੀਅਰ ਲਈ ਇੱਕ ਡਿਗਰੀ।",
+                exam_ba_eng_name: "ਬੀ.ਏ. ਅੰਗਰੇਜ਼ੀ ਸਾਹਿਤ", exam_ba_eng_desc: "ਲੇਖਣ, ਸੰਪਾਦਨ, ਅਤੇ ਅਕਾਦਮਿਕ ਖੇਤਰ ਵਿੱਚ ਕਰੀਅਰ ਲਈ।",
+                exam_iti_name: "ਆਈ.ਟੀ.ਆਈ. ਸਰਟੀਫਿਕੇਟ ਕੋਰਸ", exam_iti_desc: "ਇਲੈਕਟ੍ਰੀਸ਼ੀਅਨ, ਵੈਲਡਰ, ਫਿਟਰ, ਆਦਿ ਵਰਗੀਆਂ ਤਕਨੀਕੀ ਨੌਕਰੀਆਂ ਲਈ।",
+                exam_polytechnic_name: "ਪੌਲੀਟੈਕਨਿਕ ਡਿਪਲੋਮਾ", exam_polytechnic_desc: "ਵੱਖ-ਵੱਖ ਇੰਜੀਨੀਅਰਿੰਗ ਅਤੇ ਤਕਨੀਕੀ ਖੇਤਰਾਂ ਵਿੱਚ ਡਿਪਲੋਮਾ ਕੋਰਸ।",
+                exam_ccc_name: "ਸੀ.ਸੀ.ਸੀ. (ਕੰਪਿਊਟਰ ਸੰਕਲਪਾਂ 'ਤੇ ਕੋਰਸ)", exam_ccc_desc: "ਇੱਕ ਬੁਨਿਆਦੀ ਆਈ.ਟੀ. ਸਾਖਰਤਾ ਕੋਰਸ, ਜੋ ਅਕਸਰ ਸਰਕਾਰੀ ਨੌਕਰੀਆਂ ਲਈ ਲੋੜੀਂਦਾ ਹੁੰਦਾ ਹੈ।",
+                exam_dca_name: "ਡੀ.ਸੀ.ਏ. (ਕੰਪਿਊਟਰ ਐਪਲੀਕੇਸ਼ਨਾਂ ਵਿੱਚ ਡਿਪਲੋਮਾ)", exam_dca_desc: "ਵੱਖ-ਵੱਖ ਕੰਪਿਊਟਰ ਐਪਲੀਕੇਸ਼ਨਾਂ ਨੂੰ ਕਵਰ ਕਰਨ ਵਾਲਾ ਇੱਕ ਵਿਆਪਕ ਡਿਪਲੋਮਾ।",
             }
         };
 
@@ -414,15 +513,22 @@
                 const lang = state.currentLanguage;
                 document.querySelectorAll('[data-translate]').forEach(element => {
                     const key = element.getAttribute('data-translate');
-                    if (translations[lang][key]) {
+                    if (translations[lang] && translations[lang][key]) {
                         element.innerText = translations[lang][key];
+                    }
+                });
+                 document.querySelectorAll('[data-translate-placeholder]').forEach(element => {
+                    const key = element.getAttribute('data-translate-placeholder');
+                     if (translations[lang] && translations[lang][key]) {
+                        element.placeholder = translations[lang][key];
                     }
                 });
                 if (state.currentUser) {
                     auth.updateWelcomeMessages();
                 }
+                document.getElementById('teacherCourseContent').innerHTML = translations[lang].teacher_course_content;
                 computerCourse.renderChapters();
-                ebook.renderChapters(); // Re-render ebook chapters on language change
+                ebook.renderChapters();
             },
             showMeaning: function(meaningKey) {
                 const lang = state.currentLanguage;
@@ -432,15 +538,61 @@
 
         // ======================= AUTHENTICATION MODULE =======================
         const auth = {
+            initUserDB: function() {
+                if (!localStorage.getItem('shiksha_setu_users')) {
+                    localStorage.setItem('shiksha_setu_users', JSON.stringify([]));
+                }
+            },
+            signUp: function() {
+                const username = document.getElementById('signupUsername').value.trim();
+                const password = document.getElementById('signupPassword').value;
+                const confirmPassword = document.getElementById('signupConfirmPassword').value;
+                const role = document.getElementById('signupRole').value;
+                const lang = state.currentLanguage;
+
+                if (!username || !password || !confirmPassword) {
+                    alert(translations[lang].error_all_fields);
+                    return;
+                }
+                if (password !== confirmPassword) {
+                    alert(translations[lang].error_password_mismatch);
+                    return;
+                }
+                
+                const users = JSON.parse(localStorage.getItem('shiksha_setu_users'));
+                if (users.find(user => user.username.toLowerCase() === username.toLowerCase())) {
+                    alert(translations[lang].error_user_exists);
+                    return;
+                }
+
+                users.push({ username, password, role });
+                localStorage.setItem('shiksha_setu_users', JSON.stringify(users));
+                alert(translations[lang].signup_success);
+                ui.navigateTo('loginView');
+            },
             login: function() {
                 const username = document.getElementById('username').value.trim();
+                const password = document.getElementById('password').value;
                 const role = document.getElementById('role').value;
-                if (!username) { alert("Please enter a username."); return; }
+                const lang = state.currentLanguage;
 
+                if (!username || !password) {
+                     alert(translations[lang].error_all_fields);
+                    return;
+                }
+
+                const users = JSON.parse(localStorage.getItem('shiksha_setu_users'));
+                const foundUser = users.find(user => user.username.toLowerCase() === username.toLowerCase() && user.password === password && user.role === role);
+                
+                if (!foundUser) {
+                    alert(translations[lang].error_invalid_credentials);
+                    return;
+                }
+                
                 state.currentUser = { username, role };
-                let streak = parseInt(localStorage.getItem('streak') || 0) + 1;
+                let streak = parseInt(localStorage.getItem(`streak_${username}`) || 0) + 1;
                 localStorage.setItem('user', JSON.stringify(state.currentUser));
-                localStorage.setItem('streak', streak);
+                localStorage.setItem(`streak_${username}`, streak);
 
                 this.showDashboard();
             },
@@ -464,16 +616,15 @@
             updateWelcomeMessages: function() {
                 const { username, role } = state.currentUser;
                 const lang = state.currentLanguage;
-                const streak = localStorage.getItem('streak') || 1;
+                const streak = localStorage.getItem(`streak_${username}`) || 1;
                 
                 let welcomeMsg = translations[lang].welcome_message.replace('{username}', username);
-                let roleMsg = translations[lang].welcome_role_message.replace('{role}', role);
+                let roleMsg = translations[lang].welcome_role_message.replace('{role}', translations[lang][`role_${role}`] || role);
 
-                let welcomeElId, streakElId;
+                let welcomeElId;
                 if (role === 'student') {
                     welcomeElId = 'studentWelcomeMsg';
-                    streakElId = 'studentStreak';
-                    document.getElementById(streakElId).innerText = translations[lang].streak_message.replace('{streak}', streak);
+                    document.getElementById('studentStreak').innerText = translations[lang].streak_message.replace('{streak}', streak);
                 } else if (role === 'teacher') {
                     welcomeElId = 'teacherWelcomeMsg';
                 } else { // admin
@@ -482,7 +633,7 @@
                 document.getElementById(welcomeElId).innerHTML = `${welcomeMsg} <span class="text-gray-500 font-normal text-lg">${roleMsg}</span>`;
 
                 document.getElementById('profileUsername').innerText = username;
-                document.getElementById('profileRole').innerText = role;
+                document.getElementById('profileRole').innerText = translations[lang][`role_${role}`] || role;
             },
             checkSession: function() {
                 const savedUser = localStorage.getItem('user');
@@ -503,10 +654,11 @@
             ],
             renderChapters: function() {
                 const chapterListDiv = document.getElementById('ebookChapterList');
+                if (!chapterListDiv) return;
                 chapterListDiv.innerHTML = '';
                 this.data.forEach((chapter, index) => {
                     const lang = state.currentLanguage;
-                    const title = translations[lang][chapter.titleKey] || `Chapter ${index + 1}`;
+                    const title = (translations[lang] && translations[lang][chapter.titleKey]) || `Chapter ${index + 1}`;
                     const card = document.createElement('div');
                     card.className = 'border p-4 rounded-lg cursor-pointer hover:bg-blue-100 hover:shadow-md transition-all';
                     card.innerHTML = `<h3 class="font-bold text-lg text-blue-700">${title}</h3>`;
@@ -543,17 +695,18 @@
                 {
                     titleKey: 'ccc_ch3_title', contentKey: 'ccc_ch3_content',
                     quiz: [
-                        { qKey: 'ccc_ch3_q1', options: ['To make text bold', 'To save the document', 'To create a numbered list'], correct: 1 },
+                        { qKey: 'ccc_ch3_q1', options: ['Ctrl + S', 'Ctrl + P', 'Ctrl + C'], correct: 0 },
                         { qKey: 'ccc_ch3_q2', options: ['Font size', 'Page orientation', 'Line spacing'], correct: 1 }
                     ]
                 }
             ],
             renderChapters: function() {
                 const chapterListDiv = document.getElementById('chapterList');
+                if (!chapterListDiv) return;
                 chapterListDiv.innerHTML = '';
                 this.data.forEach((chapter, index) => {
                     const lang = state.currentLanguage;
-                    const title = translations[lang][chapter.titleKey] || `Chapter ${index + 1}`;
+                    const title = (translations[lang] && translations[lang][chapter.titleKey]) || `Chapter ${index + 1}`;
                     const card = document.createElement('div');
                     card.className = 'border p-4 rounded-lg cursor-pointer hover:bg-blue-100 hover:shadow-md transition-all';
                     card.innerHTML = `<h3 class="font-bold text-lg text-blue-700">${title}</h3>`;
@@ -574,7 +727,7 @@
         // ======================= FEATURE MODULES =======================
         const studentFeatures = {
             startQuiz: function(chapterIndex = null) {
-                if (chapterIndex !== null) {
+                if (chapterIndex !== null && computerCourse.data[chapterIndex]) {
                     state.quiz.questions = computerCourse.data[chapterIndex].quiz;
                 } else {
                     // Default general quiz
@@ -608,7 +761,7 @@
                 optionsDiv.innerHTML = '';
                 q.options.forEach((option, index) => {
                     const button = document.createElement('button');
-                    button.className = 'w-full text-left p-3 bg-gray-200 hover:bg-blue-200 rounded';
+                    button.className = 'w-full text-left p-3 bg-gray-200 hover:bg-blue-200 rounded transition-colors';
                     button.innerText = option;
                     button.onclick = () => this.checkQuizAnswer(index === q.correct);
                     optionsDiv.appendChild(button);
@@ -624,7 +777,10 @@
                     resultEl.textContent = "❌ Wrong!";
                     resultEl.className = "mt-4 font-bold text-xl text-red-600";
                 }
-                document.querySelectorAll('#quizOptions button').forEach(b => b.disabled = true);
+                document.querySelectorAll('#quizOptions button').forEach(b => {
+                    b.disabled = true;
+                    b.classList.add('opacity-50');
+                });
                 document.getElementById('nextQuizBtn').classList.remove('hidden');
             },
             nextQuizQuestion: function() {
@@ -652,8 +808,10 @@
                 const resultEl = document.getElementById('practiceResult');
                 if (ans.toLowerCase() === problem.a.toLowerCase()) {
                      resultEl.textContent = "✅ Correct!";
+                     resultEl.className = "mt-4 font-bold text-xl text-green-600";
                 } else {
                      resultEl.textContent = `❌ Wrong! Correct answer: ${problem.a}`;
+                     resultEl.className = "mt-4 font-bold text-xl text-red-600";
                 }
                 state.practice.currentIndex = (state.practice.currentIndex + 1) % state.practice.problems.length;
             }
@@ -666,7 +824,6 @@
                 resultEl.textContent = translations[lang].teacher_test_result;
                 resultEl.className = "mt-4 font-bold text-xl text-blue-600";
                 
-                // Use a timeout to allow the user to see the message before going back
                 setTimeout(() => {
                     document.getElementById('teacherTestCard').classList.add('hidden');
                     document.getElementById('assignedCourseCard').classList.remove('hidden');
@@ -676,126 +833,139 @@
         };
         
         const careerGuidance = {
+            currentStep: 0,
+            selections: {},
+            history: [],
             data: {
                 "10": {
-                    "Science": { 
-                        icon: "🔬",
-                        titleKey: "career_10_science_title", 
-                        descKey: "career_10_science_desc", 
-                        detailsKey: "career_10_science_details" 
-                    },
-                    "Commerce": { 
-                        icon: "💼",
-                        titleKey: "career_10_commerce_title", 
-                        descKey: "career_10_commerce_desc", 
-                        detailsKey: "career_10_commerce_details" 
-                    },
-                    "Arts": { 
-                        icon: "🎨",
-                        titleKey: "career_10_arts_title", 
-                        descKey: "career_10_arts_desc", 
-                        detailsKey: "career_10_arts_details" 
+                    titleKey: "class_10_title",
+                    streams: {
+                        "Science": { titleKey: "stream_science_title", icon: "🔬", subjects: { "Medical": { titleKey: "subject_medical_title", resultsKey: "results_medical" }, "Engineering": { titleKey: "subject_engineering_title", resultsKey: "results_engineering" }}},
+                        "Commerce": { titleKey: "stream_commerce_title", icon: "💼", subjects: { "CA": { titleKey: "subject_ca_title", resultsKey: "results_ca" }, "Business": { titleKey: "subject_business_title", resultsKey: "results_business" }}},
+                        "Arts": { titleKey: "stream_arts_title", icon: "🎨", subjects: { "Gov": { titleKey: "subject_gov_title", resultsKey: "results_gov" }, "Journalism": { titleKey: "subject_journalism_title", resultsKey: "results_journalism" }}},
+                        "Vocational": { titleKey: "stream_vocational_title", icon: "🛠️", subjects: { "ITI": { titleKey: "subject_iti_title", resultsKey: "results_iti" }, "Computer": { titleKey: "subject_computer_title", resultsKey: "results_computer" }}}
+                    }
+                },
+                 "12": {
+                    titleKey: "class_12_title",
+                    streams: {
+                        "Science": { titleKey: "stream_science_title", icon: "🔬", subjects: { "Medical": { titleKey: "subject_medical_title", resultsKey: "results_medical" }, "Engineering": { titleKey: "subject_engineering_title", resultsKey: "results_engineering" }}},
+                        "Commerce": { titleKey: "stream_commerce_title", icon: "💼", subjects: { "CA": { titleKey: "subject_ca_title", resultsKey: "results_ca" }, "Business": { titleKey: "subject_business_title", resultsKey: "results_business" }}},
+                        "Arts": { titleKey: "stream_arts_title", icon: "🎨", subjects: { "Gov": { titleKey: "subject_gov_title", resultsKey: "results_gov" }, "Journalism": { titleKey: "subject_journalism_title", resultsKey: "results_journalism" }}}
                     }
                 }
             },
-            showStreams: function() {
-                const classVal = document.getElementById('classSelect').value;
-                const streamsDiv = document.getElementById('careerStreams');
-                const detailsDiv = document.getElementById('careerDetails');
-                const unsureDiv = document.getElementById('careerUnsureSection');
-                
-                streamsDiv.innerHTML = '';
-                detailsDiv.innerHTML = '';
-                unsureDiv.innerHTML = '';
-                
-                if (!classVal) return;
-
-                const streams = this.data[classVal];
-                const lang = state.currentLanguage;
-
-                for (const key in streams) {
-                    const stream = streams[key];
-                    const card = document.createElement('div');
-                    card.className = 'p-4 border rounded-lg cursor-pointer hover:bg-blue-100 hover:shadow-md transition-all duration-200';
-                    card.innerHTML = `
-                        <div class="text-4xl mb-2">${stream.icon}</div>
-                        <h4 class="font-bold text-lg">${translations[lang][stream.titleKey]}</h4>
-                        <p class="text-sm text-gray-600">${translations[lang][stream.descKey]}</p>`;
-                    card.onclick = () => this.showDetails(classVal, key);
-                    streamsDiv.appendChild(card);
-                }
-                
-                // Add the "unsure" section
-                unsureDiv.innerHTML = `
-                    <h3 class="text-xl font-bold mb-2">${translations[lang]['career_unsure_title']}</h3>
-                    <p class="text-gray-700">${translations[lang]['career_unsure_content']}</p>
-                `;
+            results: {
+                "results_medical": { titleKey: "results_medical_title", items: [{ nameKey: "exam_neet_name", descKey: "exam_neet_desc" }, { nameKey: "exam_nursing_name", descKey: "exam_nursing_desc" }]},
+                "results_engineering": { titleKey: "results_engineering_title", items: [{ nameKey: "exam_jee_name", descKey: "exam_jee_desc" }, { nameKey: "exam_nda_name", descKey: "exam_nda_desc" }]},
+                "results_ca": { titleKey: "results_ca_title", items: [{ nameKey: "exam_ca_foundation_name", descKey: "exam_ca_foundation_desc" }, { nameKey: "exam_bcom_name", descKey: "exam_bcom_desc" }]},
+                "results_business": { titleKey: "results_business_title", items: [{ nameKey: "exam_bba_name", descKey: "exam_bba_desc" }, { nameKey: "exam_clat_name", descKey: "exam_clat_desc" }]},
+                "results_gov": { titleKey: "results_gov_title", items: [{ nameKey: "exam_upsc_name", descKey: "exam_upsc_desc" }, { nameKey: "exam_ssc_name", descKey: "exam_ssc_desc" }]},
+                "results_journalism": { titleKey: "results_journalism_title", items: [{ nameKey: "exam_bjmc_name", descKey: "exam_bjmc_desc" }, { nameKey: "exam_ba_eng_name", descKey: "exam_ba_eng_desc" }]},
+                "results_iti": { titleKey: "results_iti_title", items: [{ nameKey: "exam_iti_name", descKey: "exam_iti_desc" }, { nameKey: "exam_polytechnic_name", descKey: "exam_polytechnic_desc" }]},
+                "results_computer": { titleKey: "results_computer_title", items: [{ nameKey: "exam_ccc_name", descKey: "exam_ccc_desc" }, { nameKey: "exam_dca_name", descKey: "exam_dca_desc" }]},
             },
-            showDetails: function(classVal, streamKey) {
-                const detailsKey = this.data[classVal][streamKey].detailsKey;
-                const detailsDiv = document.getElementById('careerDetails');
+
+            start: function() {
+                this.currentStep = 1;
+                this.selections = {};
+                this.history = [];
+                ui.navigateTo('careerGuidanceView');
+                this.renderCurrentStep();
+            },
+            goBack: function() {
+                if(this.history.length > 0) {
+                    this.currentStep = this.history.pop();
+                    this.renderCurrentStep();
+                }
+            },
+            handleSelection: function(step, value) {
+                this.history.push(this.currentStep);
+                this.selections[`step${step}`] = value;
+                this.currentStep++;
+                this.renderCurrentStep();
+            },
+
+            renderCurrentStep: function() {
+                const container = document.getElementById('careerWizardContainer');
+                container.innerHTML = '';
+                const backButton = document.getElementById('careerBackButton');
+                const stepIndicator = document.getElementById('careerStepIndicator');
                 const lang = state.currentLanguage;
-                detailsDiv.innerHTML = `<div class="p-4 bg-gray-50 rounded-lg">${translations[lang][detailsKey]}</div>`;
+
+                backButton.classList.toggle('hidden', this.currentStep <= 1);
+                stepIndicator.innerText = translations[lang][`career_step_${this.currentStep}_title`] || '';
+                
+                switch (this.currentStep) {
+                    case 1: // Class Selection
+                        const classes = Object.keys(this.data);
+                        let classHtml = '<div class="grid grid-cols-1 md:grid-cols-2 gap-4">';
+                        classes.forEach(classKey => {
+                           classHtml += `<div onclick="careerGuidance.handleSelection(1, '${classKey}')" class="p-6 border rounded-lg cursor-pointer hover:bg-blue-100 hover:shadow-lg transition-all text-center">
+                                <h3 class="font-bold text-xl">${translations[lang][this.data[classKey].titleKey]}</h3>
+                            </div>`;
+                        });
+                        classHtml += '</div>';
+                        container.innerHTML = classHtml;
+                        break;
+                    case 2: // Stream Selection
+                        const selectedClass = this.selections.step1;
+                        const streams = this.data[selectedClass].streams;
+                        let streamHtml = '<div class="grid grid-cols-1 md:grid-cols-2 gap-4">';
+                        Object.keys(streams).forEach(streamKey => {
+                            streamHtml += `<div onclick="careerGuidance.handleSelection(2, '${streamKey}')" class="p-6 border rounded-lg cursor-pointer hover:bg-blue-100 hover:shadow-lg transition-all text-center">
+                                <div class="text-4xl mb-2">${streams[streamKey].icon}</div>
+                                <h3 class="font-bold text-xl">${translations[lang][streams[streamKey].titleKey]}</h3>
+                            </div>`;
+                        });
+                        streamHtml += '</div>';
+                        container.innerHTML = streamHtml;
+                        break;
+                    case 3: // Subject Focus Selection
+                        const classData = this.data[this.selections.step1];
+                        const streamData = classData.streams[this.selections.step2];
+                        const subjects = streamData.subjects;
+                        let subjectHtml = '<div class="grid grid-cols-1 md:grid-cols-2 gap-4">';
+                        Object.keys(subjects).forEach(subjectKey => {
+                            subjectHtml += `<div onclick="careerGuidance.handleSelection(3, '${subjectKey}')" class="p-6 border rounded-lg cursor-pointer hover:bg-blue-100 hover:shadow-lg transition-all">
+                                <h3 class="font-bold text-xl">${translations[lang][subjects[subjectKey].titleKey]}</h3>
+                            </div>`;
+                        });
+                        subjectHtml += '</div>';
+                        container.innerHTML = subjectHtml;
+                        break;
+                    case 4: // Results
+                        const finalSubjectKey = this.selections.step3;
+                        const finalSubject = this.data[this.selections.step1].streams[this.selections.step2].subjects[finalSubjectKey];
+                        const resultsData = this.results[finalSubject.resultsKey];
+                        let resultsHtml = `<h3 class="font-bold text-2xl mb-4 text-blue-700">${translations[lang][resultsData.titleKey]}</h3>
+                                           <div class="space-y-4">`;
+                        resultsData.items.forEach(item => {
+                            resultsHtml += `<div class="p-4 bg-gray-50 rounded-lg border">
+                                <h4 class="font-semibold text-lg">${translations[lang][item.nameKey]}</h4>
+                                <p class="text-gray-600">${translations[lang][item.descKey]}</p>
+                            </div>`;
+                        });
+                        resultsHtml += '</div>';
+                        container.innerHTML = resultsHtml;
+                        break;
+                }
             }
         };
 
         // ======================= DATA & INITIALIZATION =======================
         function initializeTranslations() {
-            // General Quiz Questions
-            translations.en.quiz_q1 = 'What does RAM stand for?'; translations.hi.quiz_q1 = 'RAM का मतलब क्या है?'; translations.pa.quiz_q1 = 'RAM ਦਾ ਕੀ ਅਰਥ ਹੈ?';
-            translations.en.quiz_q2 = 'Which of these is an input device?'; translations.hi.quiz_q2 = 'इनमें से कौन सा एक इनपुट डिवाइस है?'; translations.pa.quiz_q2 = 'ਇਹਨਾਂ ਵਿੱਚੋਂ ਕਿਹੜਾ ਇੱਕ ਇਨਪੁਟ ਡਿਵਾਈਸ ਹੈ?';
-            
-            // Career Guidance Content
-            translations.en.career_10_science_title = "Science";
-            translations.en.career_10_science_desc = "If you like science, math, and solving problems.";
-            translations.en.career_10_science_details = "<h4 class='font-bold text-xl mb-2'>Path with Science:</h4><ol class='list-decimal list-inside'><li><b>Subjects in Class 11/12:</b> Physics, Chemistry, Maths, and/or Biology.</li><li><b>What you can become:</b> Doctor (to help sick people), Engineer (to make buildings and machines), Scientist (to discover new things).</li><li><b>What to do:</b> Study these subjects well to get into a good college for these jobs.</li></ol>";
-            
-            translations.en.career_10_commerce_title = "Commerce";
-            translations.en.career_10_commerce_desc = "If you are interested in business, money, and accounts.";
-            translations.en.career_10_commerce_details = "<h4 class='font-bold text-xl mb-2'>Path with Commerce:</h4><ol class='list-decimal list-inside'><li><b>Subjects in Class 11/12:</b> Accounts, Business Studies, Economics.</li><li><b>What you can become:</b> Accountant (to manage money for companies), Bank Manager, or you can start your own business.</li><li><b>What to do:</b> Be good with numbers and learn how businesses work.</li></ol>";
-
-            translations.en.career_10_arts_title = "Arts / Humanities";
-            translations.en.career_10_arts_desc = "If you enjoy reading, writing, and learning about people and history.";
-            translations.en.career_10_arts_details = "<h4 class='font-bold text-xl mb-2'>Path with Arts:</h4><ol class='list-decimal list-inside'><li><b>Subjects in Class 11/12:</b> History, Geography, Political Science, Languages.</li><li><b>What you can become:</b> Teacher, Government Officer (like a Collector), Writer, or a Lawyer.</li><li><b>What to do:</b> Read a lot, improve your writing, and understand how society works.</li></ol>";
-            
-            translations.hi.career_10_science_title = "विज्ञान";
-            translations.hi.career_10_science_desc = "अगर आपको विज्ञान, गणित और समस्याएं सुलझाना पसंद है।";
-            translations.hi.career_10_science_details = "<h4 class='font-bold text-xl mb-2'>विज्ञान के साथ पथ:</h4><ol class='list-decimal list-inside'><li><b>कक्षा 11/12 में विषय:</b> भौतिकी, रसायन विज्ञान, गणित, और/या जीव विज्ञान।</li><li><b>आप क्या बन सकते हैं:</b> डॉक्टर (बीमार लोगों की मदद करने के लिए), इंजीनियर (इमारतें और मशीनें बनाने के लिए), वैज्ञानिक (नई चीजों की खोज करने के लिए)।</li><li><b>क्या करें:</b> इन नौकरियों के लिए एक अच्छे कॉलेज में प्रवेश पाने के लिए इन विषयों का अच्छी तरह से अध्ययन करें।</li></ol>";
-
-            translations.hi.career_10_commerce_title = "कॉमर्स";
-            translations.hi.career_10_commerce_desc = "अगर आपकी रुचि व्यापार, पैसे और खातों में है।";
-            translations.hi.career_10_commerce_details = "<h4 class='font-bold text-xl mb-2'>कॉमर्स के साथ पथ:</h4><ol class='list-decimal list-inside'><li><b>कक्षा 11/12 में विषय:</b> अकाउंट्स, बिजनेस स्टडीज, अर्थशास्त्र।</li><li><b>आप क्या बन सकते हैं:</b> अकाउंटेंट (कंपनियों के लिए पैसे का प्रबंधन करने के लिए), बैंक मैनेजर, या आप अपना खुद का व्यवसाय शुरू कर सकते हैं।</li><li><b>क्या करें:</b> संख्याओं के साथ अच्छे बनें और सीखें कि व्यवसाय कैसे काम करते हैं।</li></ol>";
-
-            translations.hi.career_10_arts_title = "कला / मानविकी";
-            translations.hi.career_10_arts_desc = "अगर आपको पढ़ना, लिखना और लोगों और इतिहास के बारे में सीखना पसंद है।";
-            translations.hi.career_10_arts_details = "<h4 class='font-bold text-xl mb-2'>कला के साथ पथ:</h4><ol class='list-decimal list-inside'><li><b>कक्षा 11/12 में विषय:</b> इतिहास, भूगोल, राजनीति विज्ञान, भाषाएँ।</li><li><b>आप क्या बन सकते हैं:</b> शिक्षक, सरकारी अधिकारी (जैसे कलेक्टर), लेखक, या वकील।</li><li><b>क्या करें:</b> खूब पढ़ें, अपना लेखन सुधारें और समझें कि समाज कैसे काम करता है।</li></ol>";
-
-            translations.pa.career_10_science_title = "ਵਿਗਿਆਨ";
-            translations.pa.career_10_science_desc = "ਜੇ ਤੁਸੀਂ ਵਿਗਿਆਨ, ਗਣਿਤ, ਅਤੇ ਸਮੱਸਿਆਵਾਂ ਨੂੰ ਹੱਲ ਕਰਨਾ ਪਸੰਦ ਕਰਦੇ ਹੋ।";
-            translations.pa.career_10_science_details = "<h4 class='font-bold text-xl mb-2'>ਵਿਗਿਆਨ ਨਾਲ ਮਾਰਗ:</h4><ol class='list-decimal list-inside'><li><b>11/12 ਜਮਾਤ ਵਿੱਚ ਵਿਸ਼ੇ:</b> ਭੌਤਿਕ ਵਿਗਿਆਨ, ਰਸਾਇਣ ਵਿਗਿਆਨ, ਗਣਿਤ, ਅਤੇ/ਜਾਂ ਜੀਵ ਵਿਗਿਆਨ।</li><li><b>ਤੁਸੀਂ ਕੀ ਬਣ ਸਕਦੇ ਹੋ:</b> ਡਾਕਟਰ (ਬਿਮਾਰ ਲੋਕਾਂ ਦੀ ਮਦਦ ਕਰਨ ਲਈ), ਇੰਜੀਨੀਅਰ (ਇਮਾਰਤਾਂ ਅਤੇ ਮਸ਼ੀਨਾਂ ਬਣਾਉਣ ਲਈ), ਵਿਗਿਆਨੀ (ਨਵੀਆਂ ਚੀਜ਼ਾਂ ਦੀ ਖੋਜ ਕਰਨ ਲਈ)।</li><li><b>ਕੀ ਕਰਨਾ ਹੈ:</b> ਇਹਨਾਂ ਨੌਕਰੀਆਂ ਲਈ ਇੱਕ ਚੰਗੇ ਕਾਲਜ ਵਿੱਚ ਦਾਖਲਾ ਲੈਣ ਲਈ ਇਹਨਾਂ ਵਿਸ਼ਿਆਂ ਦਾ ਚੰਗੀ ਤਰ੍ਹਾਂ ਅਧਿਐਨ ਕਰੋ।</li></ol>";
-
-            translations.pa.career_10_commerce_title = "ਕਾਮਰਸ";
-            translations.pa.career_10_commerce_desc = "ਜੇ ਤੁਸੀਂ ਵਪਾਰ, ਪੈਸੇ ਅਤੇ ਖਾਤਿਆਂ ਵਿੱਚ ਦਿਲਚਸਪੀ ਰੱਖਦੇ ਹੋ।";
-            translations.pa.career_10_commerce_details = "<h4 class='font-bold text-xl mb-2'>ਕਾਮਰਸ ਨਾਲ ਮਾਰਗ:</h4><ol class='list-decimal list-inside'><li><b>11/12 ਜਮਾਤ ਵਿੱਚ ਵਿਸ਼ੇ:</b> ਅਕਾਊਂਟਸ, ਬਿਜ਼ਨਸ ਸਟੱਡੀਜ਼, ਅਰਥ ਸ਼ਾਸਤਰ।</li><li><b>ਤੁਸੀਂ ਕੀ ਬਣ ਸਕਦੇ ਹੋ:</b> ਅਕਾਊਂਟੈਂਟ (ਕੰਪਨੀਆਂ ਲਈ ਪੈਸੇ ਦਾ ਪ੍ਰਬੰਧਨ ਕਰਨ ਲਈ), ਬੈਂਕ ਮੈਨੇਜਰ, ਜਾਂ ਤੁਸੀਂ ਆਪਣਾ ਕਾਰੋਬਾਰ ਸ਼ੁਰੂ ਕਰ ਸਕਦੇ ਹੋ।</li><li><b>ਕੀ ਕਰਨਾ ਹੈ:</b> ਨੰਬਰਾਂ ਨਾਲ ਚੰਗੇ ਬਣੋ ਅਤੇ ਸਿੱਖੋ ਕਿ ਕਾਰੋਬਾਰ ਕਿਵੇਂ ਕੰਮ ਕਰਦੇ ਹਨ।</li></ol>";
-
-            translations.pa.career_10_arts_title = "ਕਲਾ / ਮਾਨਵਤਾ";
-            translations.pa.career_10_arts_desc = "ਜੇ ਤੁਸੀਂ ਪੜ੍ਹਨਾ, ਲਿਖਣਾ ਅਤੇ ਲੋਕਾਂ ਅਤੇ ਇਤਿਹਾਸ ਬਾਰੇ ਸਿੱਖਣਾ ਪਸੰਦ ਕਰਦੇ ਹੋ।";
-            translations.pa.career_10_arts_details = "<h4 class='font-bold text-xl mb-2'>ਕਲਾ ਨਾਲ ਮਾਰਗ:</h4><ol class='list-decimal list-inside'><li><b>11/12 ਜਮਾਤ ਵਿੱਚ ਵਿਸ਼ੇ:</b> ਇਤਿਹਾਸ, ਭੂਗੋਲ, ਰਾਜਨੀਤੀ ਸ਼ਾਸਤਰ, ਭਾਸ਼ਾਵਾਂ।</li><li><b>ਤੁਸੀਂ ਕੀ ਬਣ ਸਕਦੇ ਹੋ:</b> ਅਧਿਆਪਕ, ਸਰਕਾਰੀ ਅਧਿਕਾਰੀ (ਜਿਵੇਂ ਕਿ ਇੱਕ ਕਲੈਕਟਰ), ਲੇਖਕ, ਜਾਂ ਇੱਕ ਵਕੀਲ।</li><li><b>ਕੀ ਕਰਨਾ ਹੈ:</b> ਬਹੁਤ ਪੜ੍ਹੋ, ਆਪਣੀ ਲਿਖਤ ਵਿੱਚ ਸੁਧਾਰ ਕਰੋ, ਅਤੇ ਸਮਝੋ ਕਿ ਸਮਾਜ ਕਿਵੇਂ ਕੰਮ ਕਰਦਾ ਹੈ।</li></ol>";
-
-
-            // Ebook Content & Word Meanings
+            // Ebook Content
             translations.en.ebook_ch1_title = "Chapter 1: The Sun";
             translations.en.ebook_ch1_content = `Our Sun is a huge <span onclick="ui.showMeaning('meaning_star')" class="cursor-pointer font-bold text-blue-600 hover:underline">star</span> at the center of our <span onclick="ui.showMeaning('meaning_solarsystem')" class="cursor-pointer font-bold text-blue-600 hover:underline">solar system</span>. It is a nearly perfect ball of hot, glowing <span onclick="ui.showMeaning('meaning_gas')" class="cursor-pointer font-bold text-blue-600 hover:underline">gas</span>.`;
             translations.en.meaning_star = "Star: A giant ball of hot gas that creates its own light and heat.";
             translations.en.meaning_solarsystem = "Solar System: A star and all of the objects that travel around it, including planets, moons, and asteroids.";
             translations.en.meaning_gas = "Gas: A state of matter that has no fixed shape and no fixed volume.";
-            
             translations.hi.ebook_ch1_title = "अध्याय 1: सूर्य";
             translations.hi.ebook_ch1_content = `हमारा सूर्य हमारे <span onclick="ui.showMeaning('meaning_solarsystem')" class="cursor-pointer font-bold text-blue-600 hover:underline">सौर मंडल</span> के केंद्र में एक विशाल <span onclick="ui.showMeaning('meaning_star')" class="cursor-pointer font-bold text-blue-600 hover:underline">तारा</span> है। यह गर्म, चमकती <span onclick="ui.showMeaning('meaning_gas')" class="cursor-pointer font-bold text-blue-600 hover:underline">गैस</span> का लगभग एक आदर्श गोला है।`;
             translations.hi.meaning_star = "तारा: गर्म गैस का एक विशाल गोला जो अपना प्रकाश और गर्मी पैदा करता है।";
             translations.hi.meaning_solarsystem = "सौर मंडल: एक तारा और उसके चारों ओर यात्रा करने वाली सभी वस्तुएं, जिनमें ग्रह, चंद्रमा और क्षुद्रग्रह शामिल हैं।";
             translations.hi.meaning_gas = "गैस: पदार्थ की एक अवस्था जिसका कोई निश्चित आकार और कोई निश्चित आयतन नहीं होता है।";
-            
             translations.pa.ebook_ch1_title = "ਅਧਿਆਇ 1: ਸੂਰਜ";
             translations.pa.ebook_ch1_content = `ਸਾਡਾ ਸੂਰਜ ਸਾਡੇ <span onclick="ui.showMeaning('meaning_solarsystem')" class="cursor-pointer font-bold text-blue-600 hover:underline">ਸੂਰਜੀ ਸਿਸਟਮ</span> ਦੇ ਕੇਂਦਰ ਵਿੱਚ ਇੱਕ ਵਿਸ਼ਾਲ <span onclick="ui.showMeaning('meaning_star')" class="cursor-pointer font-bold text-blue-600 hover:underline">ਤਾਰਾ</span> ਹੈ। ਇਹ ਗਰਮ, ਚਮਕਦਾਰ <span onclick="ui.showMeaning('meaning_gas')" class="cursor-pointer font-bold text-blue-600 hover:underline">ਗੈਸ</span> ਦੀ ਲਗਭਗ ਇੱਕ ਸੰਪੂਰਨ ਗੇਂਦ ਹੈ।`;
             translations.pa.meaning_star = "ਤਾਰਾ: ਗਰਮ ਗੈਸ ਦੀ ਇੱਕ ਵਿਸ਼ਾਲ ਗੇਂਦ ਜੋ ਆਪਣੀ ਰੋਸ਼ਨੀ ਅਤੇ ਗਰਮੀ ਪੈਦਾ ਕਰਦੀ ਹੈ।";
@@ -807,74 +977,46 @@
             translations.en.meaning_mercury = "Mercury: The smallest planet in our solar system and nearest to the Sun.";
             translations.en.meaning_earth = "Earth: Our home planet, the only place known to harbor life.";
             translations.en.meaning_mars = "Mars: Known as the 'Red Planet' due to its reddish appearance.";
-            
             translations.hi.ebook_ch2_title = "अध्याय 2: आंतरिक ग्रह";
             translations.hi.ebook_ch2_content = `सूर्य के सबसे निकट के ग्रहों को आंतरिक ग्रह कहा जाता है। वे हैं <span onclick="ui.showMeaning('meaning_mercury')" class="cursor-pointer font-bold text-blue-600 hover:underline">बुध</span>, शुक्र, <span onclick="ui.showMeaning('meaning_earth')" class="cursor-pointer font-bold text-blue-600 hover:underline">पृथ्वी</span>, और <span onclick="ui.showMeaning('meaning_mars')" class="cursor-pointer font-bold text-blue-600 hover:underline">मंगल</span>। उन्हें स्थलीय ग्रह के रूप में भी जाना जाता है क्योंकि उनकी ठोस, चट्टानी सतह होती है।`;
             translations.hi.meaning_mercury = "बुध: हमारे सौर मंडल का सबसे छोटा ग्रह और सूर्य के सबसे निकट।";
             translations.hi.meaning_earth = "पृथ्वी: हमारा गृह ग्रह, जीवन को आश्रय देने वाला एकमात्र ज्ञात स्थान।";
             translations.hi.meaning_mars = "मंगल: अपनी लालिमा युक्त उपस्थिति के कारण 'लाल ग्रह' के रूप में जाना जाता है।";
-            
             translations.pa.ebook_ch2_title = "ਅਧਿਆਇ 2: ਅੰਦਰੂਨੀ ਗ੍ਰਹਿ";
             translations.pa.ebook_ch2_content = `ਸੂਰਜ ਦੇ ਸਭ ਤੋਂ ਨਜ਼ਦੀਕੀ ਗ੍ਰਹਿਆਂ ਨੂੰ ਅੰਦਰੂਨੀ ਗ੍ਰਹਿ ਕਿਹਾ ਜਾਂਦਾ ਹੈ। ਉਹ ਹਨ <span onclick="ui.showMeaning('meaning_mercury')" class="cursor-pointer font-bold text-blue-600 hover:underline">ਬੁਧ</span>, ਸ਼ੁੱਕਰ, <span onclick="ui.showMeaning('meaning_earth')" class="cursor-pointer font-bold text-blue-600 hover:underline">ਧਰਤੀ</span>, ਅਤੇ <span onclick="ui.showMeaning('meaning_mars')" class="cursor-pointer font-bold text-blue-600 hover:underline">ਮੰਗਲ</span>। ਉਹਨਾਂ ਨੂੰ ਧਰਤੀ ਦੇ ਗ੍ਰਹਿ ਵੀ ਕਿਹਾ ਜਾਂਦਾ ਹੈ ਕਿਉਂਕਿ ਉਹਨਾਂ ਦੀਆਂ ਠੋਸ, ਪਥਰੀਲੀਆਂ ਸਤਹਾਂ ਹੁੰਦੀਆਂ ਹਨ।`;
             translations.pa.meaning_mercury = "ਬੁਧ: ਸਾਡੇ ਸੂਰਜੀ ਸਿਸਟਮ ਦਾ ਸਭ ਤੋਂ ਛੋਟਾ ਗ੍ਰਹਿ ਅਤੇ ਸੂਰਜ ਦੇ ਸਭ ਤੋਂ ਨੇੜੇ।";
             translations.pa.meaning_earth = "ਧਰਤੀ: ਸਾਡਾ ਘਰੇਲੂ ਗ੍ਰਹਿ, ਜੀਵਨ ਨੂੰ ਬੰਦਰਗਾਹ ਵਜੋਂ ਜਾਣਿਆ ਜਾਂਦਾ ਇਕੋ-ਇਕ ਸਥਾਨ।";
             translations.pa.meaning_mars = "ਮੰਗਲ: ਇਸਦੀ ਲਾਲ ਰੰਗਤ ਦਿੱਖ ਕਾਰਨ 'ਲਾਲ ਗ੍ਰਹਿ' ਵਜੋਂ ਜਾਣਿਆ ਜਾਂਦਾ ਹੈ।";
 
-            // CCC Course Content & Quizzes
-            // Chapter 1
+            // CCC Course Content
             translations.en.ccc_ch1_title = "Chapter 1: Introduction to Computers";
-            translations.en.ccc_ch1_content = "A computer is an electronic device that manipulates information, or data. It has the ability to store, retrieve, and process data. You likely already know that you can use a computer to type documents, send email, play games, and browse the Web. <br><br> <b>Hardware</b> refers to the physical parts of a computer, such as the monitor, keyboard, and CPU. <br><b>Software</b> is any set of instructions that tells the hardware what to do, such as a web browser, word processor, or game.";
+            translations.en.ccc_ch1_content = "A computer is an electronic device that manipulates information, or data. <br><br> <b>Hardware</b> refers to the physical parts. <br><b>Software</b> is any set of instructions that tells the hardware what to do.";
             translations.en.ccc_ch1_q1 = "Who is known as the father of the computer?";
             translations.en.ccc_ch1_q2 = "What is software?";
-
             translations.hi.ccc_ch1_title = "अध्याय 1: कंप्यूटर का परिचय";
-            translations.hi.ccc_ch1_content = "कंप्यूटर एक इलेक्ट्रॉनिक उपकरण है जो सूचना, या डेटा में हेरफेर करता है। इसमें डेटा को स्टोर करने, पुनर्प्राप्त करने और संसाधित करने की क्षमता होती है। <br><br> <b>हार्डवेयर</b> कंप्यूटर के भौतिक भागों को संदर्भित करता है, जैसे मॉनिटर, कीबोर्ड और सीपीयू। <br><b>सॉफ्टवेयर</b> निर्देशों का कोई भी सेट है जो हार्डवेयर को बताता है कि क्या करना है, जैसे वेब ब्राउज़र, वर्ड प्रोसेसर, या गेम।";
+            translations.hi.ccc_ch1_content = "कंप्यूटर एक इलेक्ट्रॉनिक उपकरण है जो सूचना, या डेटा में हेरफेर करता है। <br><br> <b>हार्डवेयर</b> कंप्यूटर के भौतिक भागों को संदर्भित करता है। <br><b>सॉफ्टवेयर</b> निर्देशों का कोई भी सेट है जो हार्डवेयर को बताता है कि क्या करना है।";
             translations.hi.ccc_ch1_q1 = "कंप्यूटर का जनक किसे कहा जाता है?";
             translations.hi.ccc_ch1_q2 = "सॉफ्टवेयर क्या है?";
-
             translations.pa.ccc_ch1_title = "ਅਧਿਆਇ 1: ਕੰਪਿਊਟਰ ਦੀ ਜਾਣ-ਪਛਾਣ";
-            translations.pa.ccc_ch1_content = "ਕੰਪਿਊਟਰ ਇੱਕ ਇਲੈਕਟ੍ਰਾਨਿਕ ਯੰਤਰ ਹੈ ਜੋ ਜਾਣਕਾਰੀ, ਜਾਂ ਡੇਟਾ ਨੂੰ ਹੇਰਾਫੇਰੀ ਕਰਦਾ ਹੈ। ਇਸ ਵਿੱਚ ਡੇਟਾ ਨੂੰ ਸਟੋਰ ਕਰਨ, ਮੁੜ ਪ੍ਰਾਪਤ ਕਰਨ ਅਤੇ ਪ੍ਰਕਿਰਿਆ ਕਰਨ ਦੀ ਸਮਰੱਥਾ ਹੈ। <br><br> <b>ਹਾਰਡਵੇਅਰ</b> ਕੰਪਿਊਟਰ ਦੇ ਭੌਤਿਕ ਹਿੱਸਿਆਂ ਨੂੰ ਦਰਸਾਉਂਦਾ ਹੈ, ਜਿਵੇਂ ਕਿ ਮਾਨੀਟਰ, ਕੀਬੋਰਡ, ਅਤੇ CPU। <br><b>ਸਾਫਟਵੇਅਰ</b> ਹਦਾਇਤਾਂ ਦਾ ਕੋਈ ਵੀ ਸੈੱਟ ਹੁੰਦਾ ਹੈ ਜੋ ਹਾਰਡਵੇਅਰ ਨੂੰ ਦੱਸਦਾ ਹੈ ਕਿ ਕੀ ਕਰਨਾ ਹੈ, ਜਿਵੇਂ ਕਿ ਇੱਕ ਵੈੱਬ ਬ੍ਰਾਊਜ਼ਰ, ਵਰਡ ਪ੍ਰੋਸੈਸਰ, ਜਾਂ ਗੇਮ।";
+            translations.pa.ccc_ch1_content = "ਕੰਪਿਊਟਰ ਇੱਕ ਇਲੈਕਟ੍ਰਾਨਿਕ ਯੰਤਰ ਹੈ ਜੋ ਜਾਣਕਾਰੀ, ਜਾਂ ਡੇਟਾ ਨੂੰ ਹੇਰਾਫੇਰੀ ਕਰਦਾ ਹੈ। <br><br> <b>ਹਾਰਡਵੇਅਰ</b> ਕੰਪਿਊਟਰ ਦੇ ਭੌਤਿਕ ਹਿੱਸਿਆਂ ਨੂੰ ਦਰਸਾਉਂਦਾ ਹੈ। <br><b>ਸਾਫਟਵੇਅਰ</b> ਹਦਾਇਤਾਂ ਦਾ ਕੋਈ ਵੀ ਸੈੱਟ ਹੁੰਦਾ ਹੈ ਜੋ ਹਾਰਡਵੇਅਰ ਨੂੰ ਦੱਸਦਾ ਹੈ ਕਿ ਕੀ ਕਰਨਾ ਹੈ।";
             translations.pa.ccc_ch1_q1 = "ਕੰਪਿਊਟਰ ਦਾ ਪਿਤਾਮਾ ਕਿਸ ਨੂੰ ਕਿਹਾ ਜਾਂਦਾ ਹੈ?";
             translations.pa.ccc_ch1_q2 = "ਸਾਫਟਵੇਅਰ ਕੀ ਹੈ?";
             
-            // Chapter 2
-            translations.en.ccc_ch2_title = "Chapter 2: Introduction to Operating System";
-            translations.en.ccc_ch2_content = "An operating system (OS) is the most important software that runs on a computer. It manages the computer's memory and processes, as well as all of its software and hardware. It also allows you to communicate with the computer without knowing how to speak the computer's language. <br><br>Examples of popular operating systems include <b>Microsoft Windows</b>, <b>macOS</b>, and <b>Linux</b>.";
-            translations.en.ccc_ch2_q1 = "What is the primary job of an Operating System?";
-            translations.en.ccc_ch2_q2 = "Which of the following is an example of an Operating System?";
-
-            translations.hi.ccc_ch2_title = "अध्याय 2: ऑपरेटिंग सिस्टम का परिचय";
-            translations.hi.ccc_ch2_content = "एक ऑपरेटिंग सिस्टम (ओएस) कंप्यूटर पर चलने वाला सबसे महत्वपूर्ण सॉफ्टवेयर है। यह कंप्यूटर की मेमोरी और प्रक्रियाओं के साथ-साथ उसके सभी सॉफ्टवेयर और हार्डवेयर का प्रबंधन करता है। <br><br>लोकप्रिय ऑपरेटिंग सिस्टम के उदाहरणों में <b>माइक्रोसॉफ्ट विंडोज</b>, <b>मैकओएस</b> और <b>लिनक्स</b> शामिल हैं।";
-            translations.hi.ccc_ch2_q1 = "ऑपरेटिंग सिस्टम का प्राथमिक कार्य क्या है?";
-            translations.hi.ccc_ch2_q2 = "निम्नलिखित में से कौन एक ऑपरेटिंग सिस्टम का उदाहरण है?";
-            
-            translations.pa.ccc_ch2_title = "ਅਧਿਆਇ 2: ਓਪਰੇਟਿੰਗ ਸਿਸਟਮ ਦੀ ਜਾਣ-ਪਛਾਣ";
-            translations.pa.ccc_ch2_content = "ਇੱਕ ਓਪਰੇਟਿੰਗ ਸਿਸਟਮ (OS) ਇੱਕ ਕੰਪਿਊਟਰ 'ਤੇ ਚੱਲਣ ਵਾਲਾ ਸਭ ਤੋਂ ਮਹੱਤਵਪੂਰਨ ਸਾਫਟਵੇਅਰ ਹੈ। ਇਹ ਕੰਪਿਊਟਰ ਦੀ ਮੈਮੋਰੀ ਅਤੇ ਪ੍ਰਕਿਰਿਆਵਾਂ ਦੇ ਨਾਲ-ਨਾਲ ਇਸਦੇ ਸਾਰੇ ਸਾਫਟਵੇਅਰ ਅਤੇ ਹਾਰਡਵੇਅਰ ਦਾ ਪ੍ਰਬੰਧਨ ਕਰਦਾ ਹੈ। <br><br>ਪ੍ਰਸਿੱਧ ਓਪਰੇਟਿੰਗ ਸਿਸਟਮਾਂ ਦੀਆਂ ਉਦਾਹਰਨਾਂ ਵਿੱਚ <b>ਮਾਈਕ੍ਰੋਸਾਫਟ ਵਿੰਡੋਜ਼</b>, <b>ਮੈਕਓਐਸ</b>, ਅਤੇ <b>ਲਿਨਕਸ</b> ਸ਼ਾਮਲ ਹਨ।";
-            translations.pa.ccc_ch2_q1 = "ਇੱਕ ਓਪਰੇਟਿੰਗ ਸਿਸਟਮ ਦਾ ਮੁੱਖ ਕੰਮ ਕੀ ਹੈ?";
-            translations.pa.ccc_ch2_q2 = "ਹੇਠ ਲਿਖਿਆਂ ਵਿੱਚੋਂ ਕਿਹੜਾ ਇੱਕ ਓਪਰੇਟਿੰਗ ਸਿਸਟਮ ਦੀ ਉਦਾਹਰਣ ਹੈ?";
-
-            // Chapter 3
-            translations.en.ccc_ch3_title = "Chapter 3: Word Processing Basics";
-            translations.en.ccc_ch3_content = "Word processing software allows users to create and edit documents. The most famous example is <b>Microsoft Word</b>. Key features include: <br><ul><li><b>Formatting text:</b> Changing font, size, color, and making text bold or italic.</li><li><b>Page Layout:</b> Setting margins, orientation (portrait/landscape), and page size.</li><li><b>Saving and Printing:</b> Saving your work for later and creating a physical copy.</li></ul> The shortcut to save a document is typically <b>Ctrl+S</b>.";
-            translations.en.ccc_ch3_q1 = "What is the keyboard shortcut to save a document?";
-            translations.en.ccc_ch3_q2 = "Changing the page from vertical to horizontal is called changing the...";
-
-            translations.hi.ccc_ch3_title = "अध्याय 3: वर्ड प्रोसेसिंग की मूल बातें";
-            translations.hi.ccc_ch3_content = "वर्ड प्रोसेसिंग सॉफ्टवेयर उपयोगकर्ताओं को दस्तावेज़ बनाने और संपादित करने की अनुमति देता है। सबसे प्रसिद्ध उदाहरण <b>Microsoft Word</b> है। मुख्य विशेषताओं में शामिल हैं: <br><ul><li><b>टेक्स्ट स्वरूपण:</b> फ़ॉन्ट, आकार, रंग बदलना और टेक्स्ट को बोल्ड या इटैलिक बनाना।</li><li><b>पृष्ठ लेआउट:</b> मार्जिन, ओरिएंटेशन (पोर्ट्रेट/लैंडस्केप), और पृष्ठ आकार सेट करना।</li><li><b>सहेजना और प्रिंट करना:</b> बाद के लिए अपना काम सहेजना और एक भौतिक प्रति बनाना।</li></ul> दस्तावेज़ को सहेजने का शॉर्टकट आमतौर पर <b>Ctrl+S</b> है।";
-            translations.hi.ccc_ch3_q1 = "किसी दस्तावेज़ को सहेजने के लिए कीबोर्ड शॉर्टकट क्या है?";
-            translations.hi.ccc_ch3_q2 = "पृष्ठ को लंबवत से क्षैतिज में बदलने को क्या कहा जाता है...";
-
-            translations.pa.ccc_ch3_title = "ਅਧਿਆਇ 3: ਵਰਡ ਪ੍ਰੋਸੈਸਿੰਗ ਦੀਆਂ ਮੂਲ ਗੱਲਾਂ";
-            translations.pa.ccc_ch3_content = "ਵਰਡ ਪ੍ਰੋਸੈਸਿੰਗ ਸਾਫਟਵੇਅਰ ਉਪਭੋਗਤਾਵਾਂ ਨੂੰ ਦਸਤਾਵੇਜ਼ ਬਣਾਉਣ ਅਤੇ ਸੰਪਾਦਿਤ ਕਰਨ ਦੀ ਆਗਿਆ ਦਿੰਦਾ ਹੈ। ਸਭ ਤੋਂ ਮਸ਼ਹੂਰ ਉਦਾਹਰਣ <b>ਮਾਈਕ੍ਰੋਸਾਫਟ ਵਰਡ</b> ਹੈ। ਮੁੱਖ ਵਿਸ਼ੇਸ਼ਤਾਵਾਂ ਵਿੱਚ ਸ਼ਾਮਲ ਹਨ: <br><ul><li><b>ਟੈਕਸਟ ਫਾਰਮੈਟਿੰਗ:</b> ਫੌਂਟ, ਆਕਾਰ, ਰੰਗ ਬਦਲਣਾ, ਅਤੇ ਟੈਕਸਟ ਨੂੰ ਬੋਲਡ ਜਾਂ ਇਟਾਲਿਕ ਬਣਾਉਣਾ।</li><li><b>ਪੇਜ ਲੇਆਉਟ:</b> ਮਾਰਜਿਨ, ਓਰੀਐਂਟੇਸ਼ਨ (ਪੋਰਟਰੇਟ/ਲੈਂਡਸਕੇਪ), ਅਤੇ ਪੇਜ ਆਕਾਰ ਸੈੱਟ ਕਰਨਾ।</li><li><b>ਸੇਵਿੰਗ ਅਤੇ ਪ੍ਰਿੰਟਿੰਗ:</b> ਬਾਅਦ ਵਿੱਚ ਲਈ ਆਪਣੇ ਕੰਮ ਨੂੰ ਸੁਰੱਖਿਅਤ ਕਰਨਾ ਅਤੇ ਇੱਕ ਭੌਤਿਕ ਕਾਪੀ ਬਣਾਉਣਾ।</li></ul> ਇੱਕ ਦਸਤਾਵੇਜ਼ ਨੂੰ ਸੁਰੱਖਿਅਤ ਕਰਨ ਲਈ ਸ਼ਾਰਟਕੱਟ ਆਮ ਤੌਰ 'ਤੇ <b>Ctrl+S</b> ਹੁੰਦਾ ਹੈ।";
-            translations.pa.ccc_ch3_q1 = "ਇੱਕ ਦਸਤਾਵੇਜ਼ ਨੂੰ ਸੁਰੱਖਿਅਤ ਕਰਨ ਲਈ ਕੀ-ਬੋਰਡ ਸ਼ਾਰਟਕੱਟ ਕੀ ਹੈ?";
-            translations.pa.ccc_ch3_q2 = "ਪੰਨੇ ਨੂੰ ਲੰਬਕਾਰੀ ਤੋਂ ਹਰੀਜੱਟਲ ਵਿੱਚ ਬਦਲਣ ਨੂੰ ਕੀ ਕਿਹਾ ਜਾਂਦਾ ਹੈ...";
+            // General Quiz Questions
+            translations.en.quiz_q1 = 'What does RAM stand for?'; translations.hi.quiz_q1 = 'RAM का मतलब क्या है?'; translations.pa.quiz_q1 = 'RAM ਦਾ ਕੀ ਅਰਥ ਹੈ?';
+            translations.en.quiz_q2 = 'Which of these is an input device?'; translations.hi.quiz_q2 = 'इनमें से कौन सा एक इनपुट डिवाइस है?'; translations.pa.quiz_q2 = 'ਇਹਨਾਂ ਵਿੱਚੋਂ ਕਿਹੜਾ ਇੱਕ ਇਨਪੁਟ ਡਿਵਾਈਸ ਹੈ?';
         }
 
         document.addEventListener('DOMContentLoaded', () => {
             initializeTranslations();
+            auth.initUserDB();
             document.getElementById('languageSwitcher').addEventListener('change', (e) => {
                 state.currentLanguage = e.target.value;
                 ui.applyTranslations();
+                // Re-render career step if visible
+                if(state.currentView === 'careerGuidanceView') {
+                    careerGuidance.renderCurrentStep();
+                }
             });
             auth.checkSession();
             ui.applyTranslations();
@@ -882,4 +1024,3 @@
     </script>
 </body>
 </html>
-
